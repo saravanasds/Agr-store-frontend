@@ -28,33 +28,41 @@ const data = [
     h: "Hello",
     p: "helooo this id AGr store",
   },
+  {
+    id: 5,
+    img:heroslideimg1,
+    h: "Hello",
+    p: "helooo this id AGr store",
+  },
 ];
 
 const Homecatagory = () => {
   return (
     <>
-      <div className="w-[100%] min-h-[600px] flex justify-center items-center gap-5 ">
-       
-          {data.map((d,index) => (
-             <div key={index} className="w-[270px] h-[300px] grid grid-col-4 rounded-xl bg-[rgb(244,246,248)]">
-              <div className="w-[100%] h-[100%] flex justify-center items-center p-3">
-              <img
-                    className="w-[250px] h-[200px]  rounded-full "
-                    src={d.img}
-                    alt={`Slide ${index}`}
-                    style={{backgroundPosition:"center",backgroundSize:"cover"}}
-                  />
-              </div>
-              <div className="w-[100%] h-[100%] text-center py-3 text-[rgb(69,89,91)]">
-                <h2 className="text-xl font-semibold">{d.h}</h2>
-                <h2 className="text-md">{d.p}</h2>
-              </div>
-            </div>
-          
-            
-          ))}
-        </div>
      
+
+    <div class="w-full min-h-[600px] flex justify-center items-center gap-5 flex-wrap p-4 lg:px-10 py-20 lg:py-0">
+       
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+            {data.map((d, index) => (
+                <div key={index} className="bg-[rgb(244,246,248)] rounded-xl overflow-hidden shadow-lg">
+                    <div className="w-full h-[200px] flex justify-center items-center">
+                        <img
+                            className="w-full h-full object-cover rounded-full"
+                            src={d.img}
+                            alt={`Slide ${index}`}
+                        />
+                    </div>
+                    <div className="w-full text-center py-5 text-[rgb(69,89,91)]">
+                        <h2 className="text-xl font-semibold">{d.h}</h2>
+                        <p className="text-md">{d.p}</p>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+
+
     </>
   );
 };

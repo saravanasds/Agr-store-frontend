@@ -8,7 +8,7 @@ import heroslideimg2 from "./HomeImages/heroslideimg2.jpg";
 
 const data = [
   {
-    img : heroslideimg1,
+    img: heroslideimg1,
   },
   {
     img: heroslideimg2,
@@ -27,45 +27,48 @@ const Homehero = () => {
   return (
     <>
       <div
-        className="w-full h-[500px] flex justify-center items-center "
+        className="lg:w-full min-h-[500px]  md:py-5 h-auto flex  justify-center items-center "
         style={{
           backgroundImage: `url(${heroimg})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
-          position: "relative", // Ensure that child elements can be positioned absolutely
         }}
       >
         {/* Static content */}
-        <div className="w-[85%] h-[70%] flex justify-center items-center gap-10 ">
-          <div className="w-[55%] h-[100%] flex flex-col justify-center items-start gap-5">
-            <h4 className="text-xl font-semibold tracking-wider text-[rgb(255,181,36)] mb-5">
+        <div className="lg:w-[85%] lg:h-[70%] h-auto md:gap-10 gap-10 w-5/6 md:w-1/2  flex lg:flex-row md:flex-col flex-col justify-center items-center lg:gap-10  p-5">
+        
+          <div className="lg:w-full lg:h-full w-full md:h-[50%] py-3 flex flex-col justify-center px-5 lg:px-5 lg:py-2 item-center lg:items-start gap-5 ">
+            <h4 className="lg:text-xl text-lg font-semibold tracking-wider text-center text-[rgb(255,181,36)] lg:mb-3">
               100% Organic Food
             </h4>
-            <h2 className="text-6xl font-bold tracking-wider text-[rgb(129,196,8)] mb-5">
+            <h2 className="lg:text-6xl text-4xl font-bold tracking-wider text-center lg:text-start text-[rgb(129,196,8)] lg:mb-4">
               Find What You Love Here!
             </h2>
-            <button className=" w-[90%] text-lg px-6 py-4 tracking-wider border-[rgb(255,181,36)] border-2 bg-[rgb(129,196,8)] hover:bg-[rgb(152,204,55)] text-white rounded-full">
+            <button className=" lg:w-[80%] lg:text-lg lg:px-6 lg:py-4 px-4 py-2 text-center tracking-wider border-[rgb(255,181,36)] border-2 bg-[rgb(129,196,8)] hover:bg-[rgb(152,204,55)] text-white rounded-full">
               View More
             </button>
           </div>
 
           {/* Slider */}
-          <div className="w-[50%] h-[100%] flex justify-center  items-center ">
-          <div className="w-[70%] h-[75%]  bg-[rgb(255,181,36)] rounded-2xl">
-            <Slider {...settings}>
-              {data.map((m, index) => (
-                <div key={index} className="flex justify-center items-center  rounded-2xl">
-                  <img
-                    className="w-[100%] h-[100%]  rounded-2xl  "
-                    src={m.img}
-                    alt={`Slide ${index}`}
-                    style={{backgroundPosition:"center",backgroundSize:"cover"}}
-                  />
-                </div>
-              ))}
-            </Slider>
+          <div className="w-full lg:w-2/5 flex justify-center items-center">
+            <div className="w-full h-full bg-[rgb(255,181,36)] rounded-2xl">
+              <Slider {...settings}>
+                {data.map((m, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-center items-center rounded-2xl"
+                  >
+                    <img
+                      className="w-full h-full object-cover rounded-2xl lg:object-fill"
+                      src={m.img}
+                      alt={`Slide ${index}`}
+                    />
+                  </div>
+                ))}
+              </Slider>
+            </div>
           </div>
-          </div>
+
         </div>
       </div>
     </>
@@ -74,11 +77,6 @@ const Homehero = () => {
 
 export default Homehero;
 
-
-
-// import React from "react";
-// // import "slick-carousel/slick/slick.css";
-// // import "slick-carousel/slick/slick-theme.css";
 // // import Slider from "react-slick";
 // import heroimg from "./HomeImages/heroimg.jpg";
 // import heroslideimg1 from "./HomeImages/heroslideimg1.png";
