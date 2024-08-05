@@ -1,5 +1,144 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 
+=======
+{/*Second try */}
+
+
+// import React, { useState } from "react";
+// import heroslideimg1 from "./HomeImages/heroslideimg1.png";
+// import heroslideimg2 from "./HomeImages/heroslideimg2.jpg";
+
+// const Skin = () => {
+//   const [isActive, setActiveTab] = useState(1);
+
+//   const changePara = (tabNumber) => {
+//     setActiveTab(tabNumber);
+//   };
+
+//   const data = [
+//     {
+//       id: 1,
+//       img: heroslideimg1,
+//       h1: "Vegtables",
+//       h: "This is a vegetable store",
+//       p: "Hello! A vegetable store",
+//     },
+//     {
+//       id: 2,
+//       img: heroslideimg2,
+//       h1: "Groceries",
+//       h: "This is a grocery store",
+//       p: "Hello! This is a grocery store",
+//     },
+//     {
+//       id: 3,
+//       img: heroslideimg1,
+//       h1: "Cosmetics",
+//       h: "This is a cosmetics store",
+//       p: "Hello! This is a cosmetics store",
+//     },
+//     {
+//       id: 4,
+//       img: heroslideimg2,
+//       h1: "Electronics",
+//       h: "This is an electronics store",
+//       p: "Hello! This is an electronics store",
+//     },
+//     {
+//       id: 5,
+//       img: heroslideimg1,
+//       h1: "Fruits",
+//       h: "This is a fruit store",
+//       p: "Hello! This is a fruit store",
+//     },
+//   ];
+//   const data1 = [
+//     {
+//       id: 1,
+//       img: heroslideimg1,
+//       h1: "Vegtables",
+//       h: "This is a vegetable store",
+//       p: "Hello! A vegetable store",
+//     },
+//     {
+//       id: 2,
+//       img: heroslideimg2,
+//       h1: "Groceries",
+//       h: "This is a grocery store",
+//       p: "Hello! This is a grocery store",
+//     },
+//     {
+//       id: 3,
+//       img: heroslideimg1,
+//       h1: "Cosmetics",
+//       h: "This is a cosmetics store",
+//       p: "Hello! This is a cosmetics store",
+//     },
+//     {
+//       id: 4,
+//       img: heroslideimg2,
+//       h1: "Electronics",
+//       h: "This is an electronics store",
+//       p: "Hello! This is an electronics store",
+//     },
+//     {
+//       id: 5,
+//       img: heroslideimg1,
+//       h1: "Fruits",
+//       h: "This is a fruit store",
+//       p: "Hello! This is a fruit store",
+//     },
+//   ];
+
+//   const activeData = data.find((d) => d.id === isActive);
+
+//   return (
+//     <div className="lg:w-full m-auto min-h-[500px]">
+//       <h2 className="text-center font-semibold text-4xl pb-10 tracking-wider text-pink-600">
+//         OUR PRODUCTS
+//       </h2>
+//       <div className="flex gap-20 text-xl justify-center items-center border-2 bg-white tracking-wider">
+//         {data.map((d1) => (
+//           <h2
+//             key={d1.id}
+//             className={
+//               isActive === d1.id
+//                 ? "cursor-pointer text-blue-500 border-b-2 border-blue-500 p-5 font-md"
+//                 : "cursor-pointer"
+//             }
+//             onClick={() => changePara(d1.id)}
+//           >
+//             {d1.h1}
+//           </h2>
+//         ))}
+//       </div>
+//       <div className="w-full min-h-[450px] flex flex-col justify-center items-center gap-4 py-5 tracking-wider leading-relaxed">
+//         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+//           {data.map((d) => (
+//             <div key={d.id} className={`w-full ${isActive === d.id ? "block" : "hidden"}`}>
+//               <img
+//                 className="w-full h-auto rounded-xl"
+//                 src={d.img}
+//                 alt={d.h1}
+//               />
+//               <h1 className="font-semibold mt-2 grid grid-col-4 bg-green-300">{d.h}</h1>
+//               <p>{d.p}</p>
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Skin;
+
+{/*finish*/}
+
+
+import React from 'react';
+>>>>>>> 4785f151021e601daa981fff9d9c5cf0c712ff97
 import heroslideimg1 from "./HomeImages/heroslideimg1.png";
 import heroslideimg2 from "./HomeImages/heroslideimg2.jpg";
 
@@ -49,9 +188,13 @@ const products = {
 };
 
 const TabContent = ({ products }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
     {products.map((product, index) => (
+<<<<<<< HEAD
       <div key={index} className="relative rounded overflow-hidden shadow-lg">
+=======
+      <div key={2} className="relative rounded overflow-hidden shadow-lg border-[1px] border-[rgb(255,181,36)]">
+>>>>>>> 4785f151021e601daa981fff9d9c5cf0c712ff97
         <img className="w-full h-48 object-cover" src={product.img} alt={product.name} />
         <div className="p-4">
           <div className="absolute top-2 left-2 bg-gray-800 text-white px-2 py-1 rounded">
@@ -76,7 +219,7 @@ const ProductTabs = () => {
   const [activeTab, setActiveTab] = React.useState('Groseries');
 
   return (
-    <div className="container mx-auto py-10 w-[100%] min-h-[500px]">
+    <div className="container mx-auto py-10 w-[100%] min-h-[500px] px-10">
       <div className="flex flex-col lg:flex-row justify-between items-center mb-8">
         <h1 className="text-4xl font-semibold text-center lg:text-left mb-4 lg:mb-0">Our Products</h1>
         <ul className="flex flex-wrap justify-center lg:justify-end">
