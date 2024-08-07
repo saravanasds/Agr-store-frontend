@@ -1,8 +1,7 @@
 import React from 'react'
-import { BrowserRouter,Router, Route, Routes,Link, NavLink } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import Layout from './Components/Layout'
-
 import Home from "./Pages/Home"
 import Shop from "./Pages/Shop"
 import Pages from "./Pages/Pages"
@@ -15,7 +14,7 @@ function App() {
           <Routes>
              <Route element={<Layout/>}>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/shop" element={<Shop/>}/>
+                <Route path="/shop/:category" element={<Shop/>}/>
                 <Route path="/pages" element={<Pages/>}/>
                 <Route path="/contact" element={<Contact/>}/>
              </Route>
