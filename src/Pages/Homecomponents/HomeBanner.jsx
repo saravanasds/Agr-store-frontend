@@ -9,9 +9,9 @@ const HomeBenefit = () => {
             <div class="lg:col-span-1 ">
                 <div class="py-4 md:text-center text-center">
                     <h1 class="text-white font-bold lg:text-7xl  text-5xl mb-5">Fresh Exotic Fruits</h1>
-                    <p class="font-normal text-[rgb(69,89,91)] lg:text-6xl text-4xl mb-5">in Our Store</p>
+                    <p class="font-bold text-[rgb(69,89,91)] lg:text-6xl text-4xl mb-5">in Our Store</p>
                     <p class="mb-10 text-[rgb(69,89,91)] lg:text-normal text-normal ">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
-                    <a href="#" class="btn text-[rgb(69,89,91)] border-2 border-white rounded-full py-4 lg:px-36 md:px-28 px-20  hover:bg-[rgb(129,196,8)] hover:text-white ">BUY</a>
+                    <a href="#" class="btn text-[rgb(69,89,91)] font-medium tracking-wider border-2 border-white transform transition-all duration-300 rounded-full py-4 lg:px-36 md:px-28 px-20  hover:bg-[rgb(129,196,8)] hover:text-white ">BUY</a>
                 </div>
             </div>
             <div class="lg:col-span-1 flex justify-center items-center lg:w-full lg:h-[100%] ">

@@ -7,31 +7,31 @@ const data = [
   {
     id: 1,
     img:heroslideimg1,
-    h: "Hello",
+    h: "Groceries",
     p: "helooo this id AGr store",
   },
   {
     id: 2,
     img:heroslideimg2,
-    h: "Hello",
+    h: "Cosmetics",
     p: "helooo this id AGr store",
   },
   {
     id: 3,
     img:heroslideimg1,
-    h: "Hello",
+    h: "Food",
     p: "helooo this id AGr store",
   },
   {
     id: 4,
     img:heroslideimg2,
-    h: "Hello",
+    h: "Furniture",
     p: "helooo this id AGr store",
   },
   {
     id: 5,
     img:heroslideimg1,
-    h: "Hello",
+    h: "Books",
     p: "helooo this id AGr store",
   },
 ];
@@ -45,7 +45,7 @@ const Homecatagory = () => {
        
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
             {data.map((d, index) => (
-                <div key={index} className="bg-[rgb(244,246,248)] rounded-xl overflow-hidden shadow-lg">
+                <div key={index} className="bg-[rgb(244,246,248)] rounded-xl overflow-hidden shadow-lg hover:scale-[1.1] transform transition-all duration-300">
                     <div className="w-full h-[200px] flex justify-center items-center">
                         <img
                             className="w-full h-full object-cover rounded-full"

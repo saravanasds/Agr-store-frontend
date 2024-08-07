@@ -5,7 +5,8 @@ import { FaSearch, FaChevronDown } from 'react-icons/fa';
 function SearchFilter() {    
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState('Select Filter');
+  const [selectedFilter, setSelectedFilter] = useState('Select Category');
+  
   const handleFilterClick = (filter) => {
     setSelectedFilter(filter);
     setDropdownOpen(false);
@@ -18,14 +19,14 @@ function SearchFilter() {
                 <input 
                     type="text" 
                     placeholder="Search" 
-                    className="outline-none w-full border-2 border-gray-300 rounded-2xl focus:outline-none  focus:border-green-500 p-2 pr-10" 
+                    className="outline-none w-full border-2 border-[rgb(255,181,36)] text-xl rounded-2xl focus:outline-none  focus:border-[rgb(129,196,8)] p-2 pr-10 px-5" 
                 />
-                      <FaSearch className="absolute right-2 text-gray-500" />
+                      <FaSearch className="absolute right-2 text-gray-500 text-xl" />
             </div>
             {/* filter */}
             <div className="relative w-[250px]">
                 <div 
-                  className="flex items-center justify-between border-2 border-gray-300 rounded-2xl bg-white p-2 cursor-pointer"
+                  className="flex items-center justify-between border-2 border-[rgb(255,181,36)] rounded-xl bg-white p-2 cursor-pointer"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                     <span>{selectedFilter}</span>
@@ -35,19 +36,19 @@ function SearchFilter() {
                 <ul className="absolute z-10 w-full bg-white border-2 border-gray-300 rounded-2xl mt-1 overflow-hidden">
             <li 
               className="p-2 hover:bg-gray-200 cursor-pointer" 
-              onClick={() => handleFilterClick('Filter 1')}
+              onClick={() => handleFilterClick('Category 1')}
             >
-              Category 1
+              Category 1  
             </li>
             <li 
               className="p-2 hover:bg-gray-200 cursor-pointer" 
-              onClick={() => handleFilterClick('Filter 2')}
+              onClick={() => handleFilterClick('Category 2')}
             >
               Category 2
             </li>
             <li 
               className="p-2 hover:bg-gray-200 cursor-pointer" 
-              onClick={() => handleFilterClick('Filter 3')}
+              onClick={() => handleFilterClick('Category 3')}
             >
               Category 3
             </li>
