@@ -57,15 +57,15 @@ const Shop = () => {
                 </h1>
             </div>
 
-            <div className='w-full h-auto bg-black'>
-                <div className='lg:w-2/3 w-full bg-white h-full m-auto'>
-                <ul className='flex justify-evenly gap-1 w-full md:w-auto md:gap-9 py-2 md:py-4 bg-green-600'>
+            <div className="sticky top-[120px] lg:top-[100px] z-10 w-full h-auto">
+  <div className="lg:w-2/3 w-full h-full m-auto">
+    <ul className="flex justify-evenly gap-1 w-full lg:w-auto md:gap-9 py-2 lg:px-4 md:py-4 lg:rounded-full bg-green-600 bg-opacity-30 backdrop-blur-md">
       {Object.keys(productsData).map((cat) => (
         <li key={cat} className="flex-1 text-center">
           <NavLink 
             to={`/shop/${cat}`} 
             className={({ isActive }) => 
-              isActive ? 'bg-blue-600 text-white block py-2' : 'bg-blue-400 block py-2'
+              isActive ? 'bg-blue-600 text-white font-bold block py-2 rounded-lg' : 'bg-blue-400 text-black block py-2 rounded-lg'
             }
           >
             {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -73,10 +73,11 @@ const Shop = () => {
         </li>
       ))}
     </ul>
-                </div>
-            </div>
+  </div>
+        </div>
 
-            <div className="sticky top-[150px] lg:top-[100px] z-10 bg-black">
+
+            {/* <div className="sticky top-[150px] lg:top-[100px] z-10 bg-black">
                 <div className='flex items-center justify-center my-4 h-auto'>
                     <ul className='flex justify-evenly gap-1 w-full md:w-auto md:gap-9 py-2 md:py-4 bg-green-600'>
                         {Object.keys(productsData).map((cat) => (
@@ -93,7 +94,7 @@ const Shop = () => {
                     ))}
                 </ul>
             </div>
-            </div>
+            </div> */}
 
         {/* <div className="sticky top-[150px] z-10 bg-white">
             <div className='flex items-center justify-center my-4  border-2 border-black'>
@@ -142,7 +143,7 @@ const Shop = () => {
             </div>
         </div> */}
 
-            <div className='p-10'>
+            <div className='px-0.5 py-5 md:p-10'>
                 <h1 className='text-3xl font-bold px-4'>Shop from Category</h1>
                 <SearchFilter 
                     products={currentProducts} 
@@ -152,78 +153,92 @@ const Shop = () => {
                     productsPerPage={productsPerPage}
                     setSelectedSubcategory={setSelectedSubcategory}
                 />
-                <div className="bg-gray-200 p-4">
-                    <div className="flex">
-                        <div className="w-1/4 bg-white p-4 rounded-lg shadow-md">
-                            <h2 className="text-lg font-semibold mb-4">Categories</h2>
-                            <ul>
-                                {subcategories.map(subcategory => (
-                                    <li 
-                                        key={subcategory} 
-                                        className="mb-2 cursor-pointer" 
-                                        onClick={() => setSelectedSubcategory(subcategory)}
-                                    >
-                                        {subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+            <div className="bg-gray-400 md:p-4">
+  <div className="flex flex-col md:flex-row">
+    {/* Subcategory section */}
+    <div className="hidden md:block md:w-1/4 bg-white p-4 rounded-lg shadow-md">
+      <h2 className="text-lg font-semibold mb-4">Categories</h2>
+      <ul>
+        {subcategories.map((subcategory) => (
+          <li
+            key={subcategory}
+            className="mb-2 cursor-pointer"
+            onClick={() => setSelectedSubcategory(subcategory)}
+          >
+            {subcategory.charAt(0).toUpperCase() + subcategory.slice(1)}
+          </li>
+        ))}
+      </ul>
+    </div>
 
-                        {/*  */}
-                        {/* <div  className="w-1/4 bg-white max-h-auto p-4 rounded-lg shadow-md">
+    {/* Product section */}
+    <div className="w-full md:w-3/4 p-2 md:p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {displayedProducts.map((product) => (
+          <div
+            key={product.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl hover:shadow-green-800 transition-shadow duration-300 group"
+          >
+            <div className="overflow-hidden">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="w-full h-36 object-cover mb-4 transition-transform duration-1000 transform group-hover:scale-125"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
+              <p className="text-gray-700 mb-2">{product.description}</p>
+              <div className="flex items-center text-lg mb-4">
+                <FaRupeeSign className="font-bold" />
+                {product.price}
+              </div>
+              <button className="w-full bg-green-500 border-2 text-white py-2 px-4 rounded-full hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
 
-                        </div> */}
-                        {/*  */}
-                        <div className="w-3/4 p-4">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {displayedProducts.map((product) => (
-                                    <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl hover:shadow-green-800 transition-shadow duration-300 group">
-                                        <div className="overflow-hidden">
-                                            <img src={product.image} alt={product.title} className="w-full h-48 object-cover mb-4 transition-transform duration-1000 transform group-hover:scale-125" />
-                                        </div>
-                                        <div className='p-4'>
-                                            <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
-                                            <p className="text-gray-700 mb-2">{product.description}</p>
-                                            <div className="flex items-center text-lg mb-4"><FaRupeeSign className='font-bold'/>{product.price}</div>
-                                            <button className="w-full bg-green-500 border-2 text-white py-2 px-4 rounded-full hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black">
-                                                Add to Cart
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+      {/* Pagination */}
+      <div className="mt-4">
+        <div className="flex justify-center space-x-2">
+          <button
+            onClick={() => handleClick(currentPage - 1)}
+            className={`bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 ${
+              currentPage === 1 ? 'cursor-not-allowed' : ''
+            }`}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          {[...Array(totalPages).keys()].map((page) => (
+            <button
+              key={page + 1}
+              onClick={() => handleClick(page + 1)}
+              className={`bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 ${
+                currentPage === page + 1 ? 'bg-gray-400 text-white' : ''
+              }`}
+            >
+              {page + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => handleClick(currentPage + 1)}
+            className={`bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 ${
+              currentPage === totalPages ? 'cursor-not-allowed' : ''
+            }`}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-                            {/* Pagination */}
-                            <div className="mt-4">
-                                <div className="flex justify-center space-x-2">
-                                    <button
-                                        onClick={() => handleClick(currentPage - 1)}
-                                        className={`bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 ${currentPage === 1 ? 'cursor-not-allowed' : ''}`}
-                                        disabled={currentPage === 1}
-                                    >
-                                        Previous
-                                    </button>
-                                    {[...Array(totalPages).keys()].map((page) => (
-                                        <button
-                                            key={page + 1}
-                                            onClick={() => handleClick(page + 1)}
-                                            className={`bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 ${currentPage === page + 1 ? 'bg-gray-400 text-white' : ''}`}
-                                        >
-                                            {page + 1}
-                                        </button>
-                                    ))}
-                                    <button
-                                        onClick={() => handleClick(currentPage + 1)}
-                                        className={`bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 ${currentPage === totalPages ? 'cursor-not-allowed' : ''}`}
-                                        disabled={currentPage === totalPages}
-                                    >
-                                        Next
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     );

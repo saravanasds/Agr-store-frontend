@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-
-=======
 {/*Second try */}
 
 
@@ -138,7 +134,6 @@ import React, { useState } from "react";
 
 
 import React from 'react';
->>>>>>> 4785f151021e601daa981fff9d9c5cf0c712ff97
 import heroslideimg1 from "./HomeImages/heroslideimg1.png";
 import heroslideimg2 from "./HomeImages/heroslideimg2.jpg";
 
@@ -190,11 +185,7 @@ const products = {
 const TabContent = ({ products }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ">
     {products.map((product, index) => (
-<<<<<<< HEAD
-      <div key={index} className="relative rounded overflow-hidden shadow-lg">
-=======
       <div key={2} className="relative rounded overflow-hidden shadow-lg border-[1px] border-[rgb(255,181,36)]">
->>>>>>> 4785f151021e601daa981fff9d9c5cf0c712ff97
         <img className="w-full h-48 object-cover" src={product.img} alt={product.name} />
         <div className="p-4">
           <div className="absolute top-2 left-2 bg-gray-800 text-white px-2 py-1 rounded">
