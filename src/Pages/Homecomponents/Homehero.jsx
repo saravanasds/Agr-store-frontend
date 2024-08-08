@@ -44,7 +44,7 @@ const Homehero = () => {
             <h2 className="lg:text-6xl text-4xl font-bold tracking-wider text-center lg:text-start text-[rgb(129,196,8)] lg:mb-4">
               Find What You Love Here!
             </h2>
-            <button className=" lg:w-[80%] lg:text-lg lg:px-6 lg:py-4 px-4 py-2 text-center tracking-wider border-[rgb(255,181,36)] border-2 bg-[rgb(129,196,8)] hover:bg-[rgb(152,204,55)] text-white rounded-full">
+            <button className=" lg:w-[80%] lg:text-lg lg:px-6 lg:py-4 px-4 py-2 text-center tracking-wider border-[rgb(255,181,36)] border-2 bg-[rgb(129,196,8)] hover:scale-[1.1] transform transition-all duration-300  text-white rounded-full">
               View More
             </button>
           </div>

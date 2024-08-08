@@ -5,7 +5,7 @@ import { IoMdMail } from "react-icons/io";
 const Topbar = () => {
   return (
     <>
-    <div className="flex flex-col">
+    <div className="hidden md:flex flex-col">
   <div className="w-full md:w-[95%] lg:w-auto lg:mx-20 mx-auto bg-[rgb(129,196,8)] text-white lg:px-4 text-lg rounded-tl-2xl rounded-br-2xl rounded-bl-[50px] rounded-tr-[50px] tracking-wider overflow-hidden">
     <div className="flex flex-col md:flex-row items-center justify-between">
       
