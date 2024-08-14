@@ -78,8 +78,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, sidebarRef }) => {
               Profile
             </NavLink>
             <NavLink
-              to="/logout"
-              className="flex items-center p-2 text-lg hover:bg-gray-200 rounded transition-colors"
+              to="/login"
+              className="flex items-center p-2 text-lg bg-gray-700 rounded transition-colors"
               onClick={toggleSidebar}
             >
               <IoLogOut className="mr-2 text-xl" />

@@ -9,14 +9,14 @@ const MobileMenu = ({ isMobileMenuOpen, toggleMobileMenu, mobileMenuRef }) => {
         isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
       }`}
       ref={mobileMenuRef}
-    >
+    >   
       <button className="absolute top-4 right-4 text-2xl" onClick={toggleMobileMenu}>
         &#10005; {/* Close icon */}
       </button>
       <NavLink
         to="/"
         className={({ isActive }) =>
-          isActive ? "block p-4 text-[rgb(129,196,8)] text-xl" : "block p-4 text-xl hover:text-[rgb(129,196,8)]"
+          isActive ? "block p-2 md:p-4 text-[rgb(129,196,8)] text-xl" : "block p-4 text-xl hover:text-[rgb(129,196,8)]"
         }
         onClick={toggleMobileMenu}
       >

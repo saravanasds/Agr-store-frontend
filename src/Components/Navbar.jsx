@@ -82,11 +82,13 @@ function Navbar() {
               onClick={toggleMobileMenu}
             >
               <GiHamburgerMenu />
-            </div>
+            </div> 
 
+            <NavLink to="/">
             <h1 className="text-[rgb(129,196,8)] font-sen text-xl md:text-4xl font-bold py-2">
               AGR STORE
             </h1>
+            </NavLink>
 
             <div className="md:w-auto text-lg hidden lg:flex justify-center items-center gap-3 text-gray-500 tracking-wider">
               <NavLink
@@ -151,10 +153,10 @@ function Navbar() {
                   </div>
                 </div>
 
-                <a href="#" className="hidden">
+                <NavLink to="/cart" className="flex items-center">
                   <FaShoppingBag />
-                </a>
-                <a href="#" className="flex items-center " onClick={toggleSidebar}>
+                </NavLink>
+                <a href="#" className="flex items-center" onClick={toggleSidebar}>
                   <IoPerson />
                 </a>
                 <NavLink to="/login" className="flex items-center ">

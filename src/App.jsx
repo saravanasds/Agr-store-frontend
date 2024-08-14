@@ -15,6 +15,7 @@ import PurchaseHistory from "./Pages/SidebarPages/PurchaseHistory"
 import Wallet from "./Pages/SidebarPages/Wallet"
 
 import Login from "./Pages/Login"
+import Cart from "./Components/NavbarComponents/Cart"
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
                 <Route path='/profile' element={<Profile/>}/>
                 <Route path='/purchases' element={<PurchaseHistory/>}/>
                 <Route path='/wallet' element={<Wallet/>}/>
+
+                <Route path='/cart' element={<Cart/>}/>
              </Route>
              <Route path='/login' element={<Login/>}/>
           </Routes>
