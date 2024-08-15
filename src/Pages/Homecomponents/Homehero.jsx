@@ -36,7 +36,7 @@ const Homehero = () => {
         }}
       >
         {/* Static content */}
-        <div className="lg:w-[85%] lg:h-[70%] h-auto md:gap-10 gap-10 w-5/6 md:w-1/2  flex lg:flex-row md:flex-col flex-col-reverse justify-center items-center lg:gap-10  p-5 bg-blue-700">
+        <div className="lg:w-[85%] lg:h-[70%] h-auto md:gap-10 gap-10 w-5/6 md:w-1/2  flex lg:flex-row md:flex-col flex-col-reverse justify-center items-center lg:gap-10  p-5 ">
         
           <div className="lg:w-full lg:h-full w-full md:h-[50%] py-3 flex flex-col justify-center px-5 lg:px-5 lg:py-2 item-center lg:items-start gap-5 ">
             <h4 className="lg:text-xl text-lg font-semibold tracking-wider text-center text-[rgb(255,181,36)] lg:mb-3">
