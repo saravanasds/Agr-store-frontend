@@ -6,8 +6,6 @@ import Home from "./Pages/Home"
 import Shop from "./Pages/Shop"
 import Pages from "./Pages/Pages"
 import Contact from "./Pages/Contact"
-
-import Level from "./Pages/SidebarPages/Level"
 import OrderStatus from "./Pages/SidebarPages/OrderStatus"
 import Overview from "./Pages/SidebarPages/Overview"
 import Profile from "./Pages/SidebarPages/Profile"
@@ -16,6 +14,7 @@ import Wallet from "./Pages/SidebarPages/Wallet"
 
 import Login from "./Pages/Login"
 import Cart from "./Components/NavbarComponents/Cart"
+import Register from './Pages/Register'
 
 function App() {
   return (
@@ -27,20 +26,19 @@ function App() {
                 <Route path="/shop/:category" element={<Shop/>}/>
                 <Route path="/pages" element={<Pages/>}/>
                 <Route path="/contact" element={<Contact/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path='/login' element={<Login/>}/>
 
                 {/*  */}
-
-                <Route path='/level' element={<Level/>}/>
                 
                 <Route path='/order-status' element={<OrderStatus/>}/>
                 <Route path='/overview' element={<Overview/>}/>
                 <Route path='/profile' element={<Profile/>}/>
                 <Route path='/purchases' element={<PurchaseHistory/>}/>
                 <Route path='/wallet' element={<Wallet/>}/>
-
                 <Route path='/cart' element={<Cart/>}/>
              </Route>
-             <Route path='/login' element={<Login/>}/>
+             
           </Routes>
       </BrowserRouter>
       {/* 
