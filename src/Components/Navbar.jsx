@@ -89,7 +89,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="sticky top-0 z-50 shadow-md shadow-gray-400 bg-white h-24">
+      <div className="sticky top-0 z-50 shadow shadow-[rgb(69,89,91)] bg-white h-24">
         <div className="flex justify-between items-center h-full w-[100%] py-2 font-semibold px-20">
           <div
             className="lg:hidden text-2xl md:text-4xl text-[rgb(129,196,8)] cursor-pointer"

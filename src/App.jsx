@@ -15,6 +15,7 @@ import Wallet from "./Pages/SidebarPages/Wallet"
 import Login from "./Pages/Login"
 import Cart from "./Components/NavbarComponents/Cart"
 import Register from './Pages/Register'
+import ProductDetail from './Pages/ProductDetails'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
              <Route element={<Layout/>}>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/shop/:department" element={<Shop/>}/>
+                <Route path="/product/:productId" element={<ProductDetail />} />
                 <Route path="/pages" element={<Pages/>}/>
                 <Route path="/contact" element={<Contact/>}/>
                 <Route path="/register" element={<Register/>}/>
