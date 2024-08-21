@@ -64,9 +64,38 @@ const Cart = () => {
     setIsSubmitted(true);
   };
 
-  const handlePlaceOrder = () => {
-    // Implement order placement logic here
-    alert('Order placed successfully!');
+  const handlePlaceOrder = async () => {
+    try {
+      const orderData = {
+        email: email,
+        products: cartItems.map(item => ({
+          productId: item.productId._id,
+          quantity: item.quantity,
+          price: item.price,
+          total: item.price * item.quantity,
+        })),
+        address: formData.address,
+        mobileNumber: formData.mobileNumber,
+        pincode: formData.pincode,
+        totalAmount: calculateTotalPrice(),
+      };
+
+      const response = await axios.post('http://localhost:5000/api/order/placeOrder', orderData);
+      if (response.status === 200) {
+        alert('Order placed successfully!');
+        // Optionally clear cart and form
+        setCartItems([]);
+        setFormData({
+          name: '',
+          mobileNumber: '',
+          address: '',
+          pincode: '',
+        });
+      }
+    } catch (error) {
+      console.error('Error placing order:', error);
+      alert('Failed to place the order. Please try again.');
+    }
   };
 
   return (
