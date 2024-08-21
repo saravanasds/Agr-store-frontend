@@ -22,6 +22,7 @@ function Login() {
       // Save the token and user data to local storage
       localStorage.setItem('token', token);
       localStorage.setItem('userName', data.name);
+      localStorage.setItem('userEmail', data.email);
 
       // Refresh the page
       window.location.reload();

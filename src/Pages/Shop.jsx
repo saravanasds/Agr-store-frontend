@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import { FaRupeeSign } from 'react-icons/fa';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import QuantityPopup from './QuantityPopup';
 
 const Shop = () => {
   const { department } = useParams();
@@ -10,6 +10,15 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [email, setEmail] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  useEffect(() => {
+    const data = localStorage.getItem('userEmail');
+    console.log(data);
+    setEmail(data);
+  }, []);
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -68,6 +77,37 @@ const Shop = () => {
       fetchProducts();
     }
   }, [department]);
+
+  const addToCart = async (productId, quantity, unit, price, productImage) => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/cart/addToCart', {
+        email,
+        productId,
+        quantity,
+        unit,
+        price,
+        productImage,
+      });
+
+      if (response.data.success) {
+        alert('Product added to cart successfully');
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    } finally {
+      closePopup();
+    }
+  };
+  const openPopup = (product) => {
+    setSelectedProduct(product);
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+    setSelectedProduct(null);
+  };
 
   return (
     <div>
@@ -158,7 +198,10 @@ const Shop = () => {
                       </div>
                       <div className='w-full flex justify-center items-center '>
                         <div className="w-[95%] flex items-center justify-between bottom-2 left-[5px] absolute">
-                          <button className="w-full bg-green-500 border-2 text-white py-1 px-2 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-sm tracking-wider">
+                          <button
+                            className="w-full bg-green-500 border-2 text-white py-1 px-2 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-sm tracking-wider"
+                            onClick={() => openPopup(product)}
+                          >
                             + Add to Cart
                           </button>
                         </div>
@@ -168,6 +211,14 @@ const Shop = () => {
                 ))}
               </div>
             </div>
+            {/* Render the popup if it is open */}
+            {isPopupOpen && (
+              <QuantityPopup
+                product={selectedProduct}
+                onClose={closePopup}
+                onAddToCart={addToCart}
+              />
+            )}
           </div>
         </div>
       </div>

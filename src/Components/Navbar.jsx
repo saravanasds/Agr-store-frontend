@@ -4,6 +4,7 @@ import { IoPerson, IoSearch } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
+import axios from "axios";
 
 // Components
 import Sidebar from "./NavbarComponents/Sidebar";
@@ -14,25 +15,52 @@ function Navbar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for dropdown menu
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchSlideVisible, setIsSearchSlideVisible] = useState(false);
   const [token, setToken] = useState('');
   const [user, setUser] = useState('');
+  const [cartItems, setCartItems] = useState([]);
 
   const searchRef = useRef(null);
   const sidebarRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const slideRef = useRef(null);
 
-  const navigate = useNavigate(); // Use useNavigate hook for navigation
+  const navigate = useNavigate();
 
+  // Fetch user data and token
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('userName');
     setToken(storedToken);
-    const data = localStorage.getItem('userName');
-    console.log(data);
-    setUser(data);
+    setUser(storedUser);
   }, []);
+
+  // Fetch cart items
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      const email = localStorage.getItem('userEmail');  // Directly access email from localStorage
+      console.log('Fetching cart items for:', email);  // Debugging
+
+      if (email) {
+        try {
+          const response = await axios.post('http://localhost:5000/api/cart/getCartItems', {
+            email: email,
+          });
+
+          console.log('Cart items response:', response.data);  // Debugging
+          setCartItems(response.data.products);
+        } catch (error) {
+          console.error('Error fetching cart products:', error);
+        }
+      }
+    };
+
+    fetchCartItems();
+  }, []);
+
+  console.log('Cart items:', cartItems);  // Debugging
+
 
   const toggleSearchBar = () => {
     setIsExpanded(!isExpanded);
@@ -80,10 +108,9 @@ function Navbar() {
   }, []);
 
   const handleSignOut = (event) => {
-    event.preventDefault(); // Prevent default link behavior
+    event.preventDefault();
     localStorage.removeItem('token');
     setToken(null);
-    // Redirect the user using react-router's navigate
     navigate("/login");
   };
 
@@ -141,7 +168,6 @@ function Navbar() {
                 />
               </div>
 
-              {/* Search icon for mobile */}
               <div className="lg:hidden flex items-center">
                 <div
                   className="border-[rgb(255,181,36)] border-[1px] rounded-full p-1 md:p-2 bg-white transition-transform duration-500"
@@ -155,7 +181,7 @@ function Navbar() {
                 <div className="relative">
                   <FaShoppingCart className="w-8 h-8" />
                   <div className="absolute bg-[#3E4095] w-[20px] h-[20px] -top-1 -right-1 rounded-full flex justify-center items-center">
-                    <span className="text-sm text-white">3</span>
+                    <span className="text-sm text-white">{cartItems.length}</span>
                   </div>
                 </div>
               </NavLink>
@@ -169,17 +195,6 @@ function Navbar() {
                       <MdAccountCircle className="w-8 h-8 text-gray-500" />
                     </a>
                   </div>
-
-                  {/* <div>
-                    <a
-                      href="/login" // Ensure this is correct or use NavLink if needed
-                      onClick={handleSignOut}
-                      className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 "
-                    >
-                      Sign Out
-                    </a>
-                  </div> */}
-
                 </div>
               ) : (
                 <div className="flex justify-center items-center gap-2">
@@ -201,7 +216,6 @@ function Navbar() {
           </div>
         </div>
 
-        {/* Search bar for small screens */}
         <div
           className={`relative sm:flex md:hidden items-center h-auto w-[80%] mx-auto my-2 rounded-full p-2 bg-white transition-transform duration-500 ${isSearchSlideVisible ? "translate-y-0" : "-translate-y-48"
             }`}
@@ -215,21 +229,19 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Mobile navigation menu */}
       <MobileMenu
         isMobileMenuOpen={isMobileMenuOpen}
         toggleMobileMenu={toggleMobileMenu}
-        mobileMenuRef={mobileMenuRef}
       />
 
-      {/* Sidebar content */}
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar}
-        sidebarRef={sidebarRef}
+        handleSignOut={handleSignOut}
       />
     </>
   );
 }
 
 export default Navbar;
+
