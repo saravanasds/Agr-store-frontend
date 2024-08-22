@@ -112,7 +112,7 @@ const Shop = () => {
   return (
     <div>
       <div className='relative h-[150px] md:h-[200px] m-2 md:m-6 w-auto rounded-lg overflow-hidden bg-white '>
-        <h1 className='relative z-10 flex items-center justify-center h-full w-full text-black text-4xl md:text-6xl font-bold '>
+        <h1 className='relative z-10 flex items-center justify-center h-full w-full text-black text-4xl md:text-6xl font-bold capitalize'>
           {department}
         </h1>
       </div>
@@ -121,7 +121,7 @@ const Shop = () => {
         <div className="w-full h-full">
           <ul className="flex flex-wrap justify-evenly gap-2 md:gap-4 md:py-3 px-2 md:px-0 bg-[#3E4095] overflow-x-auto">
             {departments.map((department, index) => (
-              <li key={index} className="flex items-center gap-2 text-center text-sm tracking-wider">
+              <li key={index} className="flex items-center gap-2 text-center text-sm tracking-wider capitalize">
                 <NavLink
                   to={`/shop/${department.department}`}
                   className={({ isActive }) =>
@@ -140,12 +140,12 @@ const Shop = () => {
 
 
       <div className='px-0.5 py-5 md:p-10'>
-        <h1 className='text-4xl font-bold px-4 mb-8 text-center tracking-wider text-[rgb(129,196,8)]'>Shop from department</h1>
+        <h1 className='text-4xl font-bold px-4 mb-8 text-center tracking-wider text-[rgb(129,196,8)] capitalize'>Shop from department</h1>
         <div className="bg-[rgb(232,236,243)] md:p-2 rounded">
           <div className="flex flex-col md:flex-row ">
             {/* category section */}
             <div className="hidden md:block md:w-[15%] bg-white p-2 rounded shadow-md ">
-              <h2 className="w-full text-lg font-semibold mb-4 bg-slate-400 text-white text-center py-1 tracking-wider rounded">Categories</h2>
+              <h2 className="w-full text-lg font-semibold mb-4 bg-slate-400 text-white text-center py-1 tracking-wider rounded capitalize">Categories</h2>
               <ul className='px-4'>
                 {/* "All Products" tab */}
                 <li
@@ -160,7 +160,7 @@ const Shop = () => {
                 {categories.map((category) => (
                   <li
                     key={category._id}
-                    className="mb-2 cursor-pointer"
+                    className="mb-2 cursor-pointer capitalize"
                     onClick={() => {
                       const filtered = products.filter(product => product.category === category.category);
                       setFilteredProducts(filtered);
@@ -191,13 +191,13 @@ const Shop = () => {
                       </div>
                     </Link>
                     <div className="p-2 flex text-center flex-col ">
-                      <h3 className="text-xs md:text-[16px] font-semibold">{product.productName}</h3>
-                      <p className="text-xs md:text-gray-700 mb-1"> {product.description} </p>
+                      <h3 className="text-xs md:text-[16px] font-semibold capitalize">{product.productName}</h3>
+                      <p className="text-xs md:text-gray-700 mb-1 capitalize"> {product.description} </p>
                       <div className="flex items-center text-sm justify-center">
                         <span className="ml-1 font-semibold mb-1">&#x20B9; {product.price} <span className='font-normal text-gray-800'>({product.unit})</span></span>
                       </div>
                       <div className='w-full flex justify-center items-center '>
-                        <div className="w-[95%] flex items-center justify-between bottom-2 left-[5px] absolute">
+                        <div className="w-[90%] flex items-center justify-between bottom-2 left-[10px] absolute">
                           <button
                             className="w-full bg-green-500 border-2 text-white py-1 px-2 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-sm tracking-wider"
                             onClick={() => openPopup(product)}

@@ -21,34 +21,28 @@ function App() {
   return (
     <>
       <BrowserRouter>
-          <Routes>
-             <Route element={<Layout/>}>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/shop/:department" element={<Shop/>}/>
-                <Route path="/product/:productId" element={<ProductDetail />} />
-                <Route path="/pages" element={<Pages/>}/>
-                <Route path="/contact" element={<Contact/>}/>
-                <Route path="/register" element={<Register/>}/>
-                <Route path='/login' element={<Login/>}/>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/shop/:department" element={<Shop />} />
+            <Route path="/product/:productId" element={<ProductDetail />} />
+            <Route path="/pages" element={<Pages />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/register" element={<Register />} />
+            <Route path='/login' element={<Login />} />
 
-                {/*  */}
-                
-                <Route path='/order-status' element={<OrderStatus/>}/>
-                <Route path='/overview' element={<Overview/>}/>
-                <Route path='/profile' element={<Profile/>}/>
-                <Route path='/purchases' element={<PurchaseHistory/>}/>
-                <Route path='/wallet' element={<Wallet/>}/>
-                <Route path='/cart' element={<Cart/>}/>
-             </Route>
-             
-          </Routes>
+
+
+            <Route path='/order-status' element={<OrderStatus />} />
+            <Route path='/overview' element={<Overview />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/purchases' element={<PurchaseHistory />} />
+            <Route path='/wallet' element={<Wallet />} />
+            <Route path='/cart' element={<Cart />} />
+          </Route>
+
+        </Routes>
       </BrowserRouter>
-      {/* 
-
-
-
-
- */}
     </>
   )
 }
