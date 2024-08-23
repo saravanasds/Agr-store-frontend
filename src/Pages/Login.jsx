@@ -23,6 +23,7 @@ function Login() {
       localStorage.setItem('token', token);
       localStorage.setItem('userName', data.name);
       localStorage.setItem('userEmail', data.email);
+      console.log(data.email);
 
       // Refresh the page
       window.location.reload();

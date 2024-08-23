@@ -78,11 +78,13 @@ const Shop = () => {
     }
   }, [department]);
 
-  const addToCart = async (productId, quantity, unit, price, productImage) => {
+  const addToCart = async (productId, quantity, unit, price, productImage, shopName, productCode) => {
     try {
       const response = await axios.post('http://localhost:5000/api/cart/addToCart', {
         email,
         productId,
+        productCode,
+        shopName,
         quantity,
         unit,
         price,

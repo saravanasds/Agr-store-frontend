@@ -85,8 +85,10 @@ const Cart = () => {
         email: email,
         products: cartItems.map(item => ({
           productId: item.productId._id,
+          productCode: item.productCode,
           productName: item.productId.productName,
           vendorEmail: item.productId.vendorEmail,
+          shopName: item.shopName,
           productImage: item.productImage,
           quantity: item.quantity,
           price: item.price,

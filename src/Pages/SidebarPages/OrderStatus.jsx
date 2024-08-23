@@ -30,10 +30,10 @@ const OrderStatus = () => {
     return (
         <div className="w-[70%] mx-auto p-4 py-20">
             <h1 className="text-2xl font-semibold mb-4">Your Orders</h1>
-            <div className="flex flex-col">
+            <div className="flex flex-col ">
                 {orders.length > 0 ? (
                     orders.map((order, index) => (
-                        <div key={index} className="p-4 bg-slate-200 shadow-md shadow-gray-400 rounded-lg flex justify-between items-center px-8">
+                        <div key={index} className="p-4 mb-4 bg-slate-200 shadow-md shadow-gray-400 rounded-lg flex justify-between items-center px-8">
                             <div className="">
                                 <h3 className="font-semibold">Products:</h3>
                                 <ul className="list-disc ml-4">

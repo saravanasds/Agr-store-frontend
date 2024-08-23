@@ -13,9 +13,11 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, sidebarRef }) => {
     event.preventDefault(); // Prevent default link behavior
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
-    // Redirect the user using react-router's navigate
+    localStorage.removeItem('userEmail');
+    // Redirect the user using react-router's navigate 
     navigate('/login');
     window.location.reload();
+
   };
 
   useEffect(() => {
