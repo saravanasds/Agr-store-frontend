@@ -50,7 +50,7 @@ const OrderStatus = () => {
                             </div>
                             <div>
                                 <p className='mb-2'><strong>Total Amount:</strong> &#x20B9; {order.totalAmount}</p>
-                                <p><strong>Status:</strong> <span className='text-green-600'>Completed</span></p>
+                                <p><strong>Status:</strong> <span className='text-gray-400 font-semibold'>{order.orderStatus}</span></p>
                             </div>
 
                         </div>

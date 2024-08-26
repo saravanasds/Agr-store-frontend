@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,9 +24,8 @@ function Login() {
       localStorage.setItem('token', token);
       localStorage.setItem('userName', data.name);
       localStorage.setItem('userEmail', data.email);
-      console.log(data.email);
-
-      // Refresh the page
+      
+      navigate('/');
       window.location.reload();
     } catch (error) {
       if (error.response) {
