@@ -4,6 +4,7 @@ import axios from 'axios';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [email, setEmail] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('COD'); // Default to COD
 
   useEffect(() => {
     const data = localStorage.getItem('userEmail');
@@ -80,50 +81,127 @@ const Cart = () => {
   };
 
   const handlePlaceOrder = async () => {
-    try {
-      const orderData = {
-        email: email,
-        products: cartItems.map(item => ({
-          productId: item.productId._id,
-          productCode: item.productCode,
-          productName: item.productId.productName,
-          vendorEmail: item.productId.vendorEmail,
-          shopName: item.shopName,
-          productImage: item.productImage,
-          quantity: item.quantity,
-          price: item.price,
-          total: item.price * item.quantity,
-        })),
-        name: formData.name,
-        address: formData.address,
-        mobileNumber: formData.mobileNumber,
-        pincode: formData.pincode,
-        totalAmount: calculateTotalPrice(),
-      };
+    const orderData = {
+      email: email,
+      products: cartItems.map(item => ({
+        productId: item.productId._id,
+        productCode: item.productCode,
+        productName: item.productId.productName,
+        vendorEmail: item.productId.vendorEmail,
+        shopName: item.shopName,
+        productImage: item.productImage,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.price * item.quantity,
+      })),
+      name: formData.name,
+      address: formData.address,
+      mobileNumber: formData.mobileNumber,
+      pincode: formData.pincode,
+      totalAmount: calculateTotalPrice(),
+      paymentMethod: paymentMethod,
+    };
 
-      const response = await axios.post('http://localhost:5000/api/order/placeOrder', orderData);
-      if (response.status === 200) {
-        alert('Order placed successfully!');
-
-        // Clear the cart after placing the order
-        await axios.post('http://localhost:5000/api/cart/clearCart', { email: email });
-
-        // Optionally clear cart and form in the frontend
-        setCartItems([]);
-        setFormData({
-          name: '',
-          mobileNumber: '',
-          address: '',
-          pincode: '',
-        });
+    if (paymentMethod === 'Online') {
+      handleOnlinePayment(orderData);
+    } else {
+      try {
+        const response = await axios.post('http://localhost:5000/api/order/placeOrder', orderData);
+        console.log(response);
+        if (response.status === 201) {
+          alert('Order placed successfully!');
+          await axios.post('http://localhost:5000/api/cart/clearCart', { email: email });
+          setCartItems([]);
+          setFormData({
+            name: '',
+            mobileNumber: '',
+            address: '',
+            pincode: '',
+          });
+        }
+      } catch (error) {
+        console.error('Error placing order:', error);
+        alert('Failed to place the order. Please try again.');
       }
-    } catch (error) {
-      console.error('Error placing order:', error);
-      alert('Failed to place the order. Please try again.');
     }
   };
 
-
+  const handleOnlinePayment = async (orderData) => {
+    try {
+      const orderResponse = await axios.post('http://localhost:5000/api/order/createOrder', {
+        amount: orderData.totalAmount * 100,
+        currency: 'INR',
+        receipt: 'order_rcptid_11',
+      });
+  
+      if (orderResponse.status !== 200) {
+        throw new Error('Failed to create order');
+      }
+  
+      const { order_id } = orderResponse.data;
+  
+      const options = {
+        key: 'rzp_test_wH98jusmGqHYDH',
+        amount: orderData.totalAmount * 100,
+        currency: 'INR',
+        name: 'Agr Store',
+        description: 'Order Payment',
+        order_id,
+        handler: async function (response) {
+          try {
+            const paymentData = {
+              ...orderData,
+              razorpayPaymentId: response.razorpay_payment_id,
+              // razorpayOrderId: response.razorpay_order_id,
+              // razorpaySignature: response.razorpay_signature,
+            };
+  
+            const orderPlaceResponse = await axios.post('http://localhost:5000/api/order/placeOrder', paymentData);
+  
+            if (orderPlaceResponse.status === 201) {
+              alert('Payment successful and order placed!');
+              await axios.post('http://localhost:5000/api/cart/clearCart', { email: email });
+              setCartItems([]);
+              setFormData({
+                name: '',
+                mobileNumber: '',
+                address: '',
+                pincode: '',
+              });
+            }
+          } catch (error) {
+            console.error('Error processing payment and placing order:', error);
+            alert('Payment failed. Please try again.');
+          }
+        },
+        prefill: {
+          name: orderData.name,
+          email: email,
+          contact: formData.mobileNumber,
+        },
+        notes: {
+          address: formData.address,
+        },
+        theme: {
+          color: '#3399cc',
+        },
+      };
+  
+      try {
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } catch (error) {
+        console.error('Error initializing Razorpay:', error);
+        alert('There was an issue initializing the payment process. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+      alert('There was an issue creating the order. Please try again.');
+    }
+  };
+  
+  
+  
   return (
     <>
       {
@@ -185,105 +263,113 @@ const Cart = () => {
                           Remove
                         </button>
                       </td>
-                      <td className="py-3 px-6 text-center text-gray-900 font-semibold">
-                        &#x20B9; {item.price * item.quantity}
+                      <td className="py-3 px-6 text-center">
+                        <span className="text-gray-900 font-semibold">
+                          &#x20B9; {item.price * item.quantity}
+                        </span>
                       </td>
                     </tr>
                   ))}
+                  <tr>
+                    <td colSpan="5" className="text-right font-semibold">Total Price:</td>
+                    <td className="py-3 px-6 text-center text-gray-900 font-semibold">
+                      &#x20B9; {calculateTotalPrice()}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
-              <div className="w-full mt-8 text-right  border-b border-gray-600">
-                <h2 className="text-xl font-semibold pb-2 mr-10">Total: &#x20B9; {calculateTotalPrice()}</h2>
-              </div>
             </div>
-
-            <div className='w-[80%]'>
-              <div className="flex gap-8">
-                {/* Form Section */}
-                <form
-                  className="w-[50%]  p-4 bg-white"
-                  onSubmit={handleSubmit}
+            <div className="w-[80%] mt-10">
+              <h1 className="text-2xl font-semibold mb-4 text-left">Enter your details:</h1>
+              <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md">
+                <div className="mb-4">
+                  <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="mobileNumber" className="block text-gray-700 font-semibold mb-2">Mobile Number</label>
+                  <input
+                    type="text"
+                    id="mobileNumber"
+                    value={formData.mobileNumber}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="address" className="block text-gray-700 font-semibold mb-2">Address</label>
+                  <input
+                    type="text"
+                    id="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="pincode" className="block text-gray-700 font-semibold mb-2">Pincode</label>
+                  <input
+                    type="text"
+                    id="pincode"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 font-semibold mb-2">Select Payment Method:</label>
+                  <div>
+                    <label className="mr-4">
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="COD"
+                        checked={paymentMethod === 'COD'}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                      />
+                      Cash on Delivery (COD)
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="Online"
+                        checked={paymentMethod === 'Online'}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
+                      />
+                      Online Payment
+                    </label>
+                  </div>
+                </div>
+                <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded">
+                  Place Order
+                </button>
+              </form>
+            </div>
+            {isSubmitted && (
+              <div className="w-[80%] mt-10">
+                <button
+                  onClick={handlePlaceOrder}
+                  className="w-full bg-green-500 text-white py-2 px-4 rounded"
                 >
-                  <h1 className='text-2xl font-semibold text-left py-4 tracking-wider mb-4 border-b border-gray-300'>
-                    Delivery Address Details:
-                  </h1>
-
-                  <div className="mb-4">
-                    <input
-                      type="text"
-                      id="name"
-                      placeholder="Enter your name"
-                      className="w-full px-3 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <input
-                      type="number"
-                      id="mobileNumber"
-                      placeholder="Enter your mobile number"
-                      className="w-full px-3 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <textarea
-                      type="text"
-                      id="address"
-                      placeholder="Enter your address"
-                      className="w-full px-3 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="mb-4">
-                    <input
-                      type="text"
-                      id="pincode"
-                      placeholder="Enter your pin code"
-                      className="w-full px-3 py-2 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-[#3E4095] text-white px-3 py-2 rounded hover:bg-blue-600 transition duration-300">
-                    Submit
-                  </button>
-                </form>
-
-                {/* Preview Section */}
-                {isSubmitted && (
-                  <div className="w-[50%] p-4 ">
-                    <h2 className="text-2xl font-semibold text-left py-4 tracking-wider mb-4 border-b border-gray-300">Shipping Details:</h2>
-                    <p className='mb-2 tracking-wider'><strong>Name:</strong> {formData.name}</p>
-                    <p className='mb-2 tracking-wider'><strong>Mobile No:</strong> {formData.mobileNumber}</p>
-                    <p className='mb-2 tracking-wider'><strong>Address:</strong> {formData.address}</p>
-                    <p className='mb-2 tracking-wider'><strong>Pin Code:</strong> {formData.pincode}</p>
-
-                    <div className="mt-6">
-                      <h3 className="w-full border-b border-gray-500 text-lg font-semibold pb-3">Total Amount: &#x20B9; {calculateTotalPrice()}</h3>
-                      <button
-                        onClick={handlePlaceOrder}
-                        className="w-full bg-green-500 text-white px-3 py-2 mt-5 rounded hover:bg-green-600 transition duration-300">
-                        Place Your Order
-                      </button>
-                      <button
-                        onClick={() => window.location.reload()}
-                        className="w-full bg-gray-400 text-white px-3 py-2 mt-4 rounded hover:bg-gray-600 transition duration-300">
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                )}
+                  Confirm & Place Order
+                </button>
               </div>
-            </div>
+            )}
           </div>
-        ) :
-          <div className='w-full h-[50vh] flex justify-center items-center text-2xl font-semibold '>Your Cart is Empty</div>
+        ) : (
+          <p>Your cart is empty</p>
+        )
       }
     </>
   );
