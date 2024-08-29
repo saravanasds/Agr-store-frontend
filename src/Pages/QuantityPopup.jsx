@@ -25,7 +25,18 @@ const QuantityPopup = ({ product, onClose, onAddToCart }) => {
                 <div className="mt-6 flex justify-end">
                     <button onClick={onClose} className="mr-4 bg-gray-300 px-5 py-1 rounded">Cancel</button>
                     <button
-                        onClick={() => onAddToCart(product._id, quantity, product.unit, product.price, product.productImage, product.shopName, product.productCode)}
+                        onClick={() => onAddToCart(
+                            product._id,
+                            quantity,
+                            product.unit,
+                            product.actualPrice,
+                            product.price,
+                            product.balance,
+                            product.productImage,
+                            product.shopName,
+                            product.productCode,
+                            product.vendorCommission
+                        )}
                         className="bg-[#3E4095] text-white px-5 py-1 rounded"
                     >
                         Add to Cart

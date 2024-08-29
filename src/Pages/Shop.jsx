@@ -78,16 +78,22 @@ const Shop = () => {
     }
   }, [department]);
 
-  const addToCart = async (productId, quantity, unit, price, productImage, shopName, productCode) => {
+  const addToCart = async (productId, quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, vendorCommission) => {
     try {
+      // Calculate the total balance based on the quantity
+      const totalBalance = balance * quantity;
+
       const response = await axios.post('http://localhost:5000/api/cart/addToCart', {
         email,
         productId,
         productCode,
+        vendorCommission,
         shopName,
         quantity,
         unit,
+        actualPrice,
         price,
+        balance: totalBalance, // Send the correct balance
         productImage,
       });
 
@@ -101,6 +107,7 @@ const Shop = () => {
       closePopup();
     }
   };
+
   const openPopup = (product) => {
     setSelectedProduct(product);
     setIsPopupOpen(true);
@@ -181,7 +188,7 @@ const Shop = () => {
                 {filteredProducts.map((product) => (
                   <div
                     key={product._id}
-                    className="w-[220px] h-[310px] bg-white rounded-lg shadow-md hover:shadow-lg hover:shadow-gray-400 border border-[#3E4095] transition-transform duration-1000 transform "
+                    className="w-[220px] h-[320px] bg-white rounded-lg shadow-md hover:shadow-lg hover:shadow-gray-400 border border-[#3E4095] transition-transform duration-1000 transform "
                   >
                     <Link to={`/product/${product._id}`} key={product._id}>
                       <div className="w-[220px] h-[200px] overflow-hidden rounded-t-lg p-2 shadow-md">
@@ -195,8 +202,9 @@ const Shop = () => {
                     <div className="p-2 flex text-center flex-col ">
                       <h3 className="text-xs md:text-[16px] font-semibold capitalize">{product.productName}</h3>
                       <p className="text-xs md:text-gray-700 mb-1 capitalize"> {product.description} </p>
-                      <div className="flex items-center text-sm justify-center">
-                        <span className="ml-1 font-semibold mb-1">&#x20B9; {product.price} <span className='font-normal text-gray-800'>({product.unit})</span></span>
+                      <div className="flex items-center text-sm justify-center ">
+                        <span className=' text-gray-500'><del>&#x20B9;{product.actualPrice}</del></span>
+                        <span className="ml-1 font-semibold  text-lg">&#x20B9; {product.price}</span> <span className='font-normal text-gray-800'>({product.unit})</span>
                       </div>
                       <div className='w-full flex justify-center items-center '>
                         <div className="w-[90%] flex items-center justify-between bottom-2 left-[10px] absolute">
