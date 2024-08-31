@@ -83,27 +83,35 @@ const Cart = () => {
   const handlePlaceOrder = async () => {
     const orderData = {
       email: email,
-      products: cartItems.map(item => ({
-        productId: item.productId._id,
-        productCode: item.productCode,
-        vendorCommission: item.vendorCommission,
-        productName: item.productId.productName,
-        vendorEmail: item.productId.vendorEmail,
-        shopName: item.shopName,
-        productImage: item.productImage,
-        quantity: item.quantity,
-        actualPrice: item.actualPrice,
-        price: item.price,
-        balance: item.balance,
-        total: item.price * item.quantity,
-      })),
+      products: cartItems.map(item => {
+        // Calculate commission amount for each product
+        const commissionAmount = (item.vendorCommission / 100) * item.price * item.quantity;
+    
+        return {
+          productId: item.productId._id,
+          productCode: item.productCode,
+          vendorCommission: item.vendorCommission,
+          productName: item.productId.productName,
+          vendorEmail: item.productId.vendorEmail,
+          shopName: item.shopName,
+          productImage: item.productImage,
+          quantity: item.quantity,
+          actualPrice: item.actualPrice,
+          price: item.price,
+          balance: item.balance,
+          total: item.price * item.quantity,
+          commissionAmount: commissionAmount // Add the commission amount to each product
+        };
+      }),
       name: formData.name,
       address: formData.address,
       mobileNumber: formData.mobileNumber,
       pincode: formData.pincode,
       totalAmount: calculateTotalPrice(),
       paymentMethod: paymentMethod,
+      totalCommission: cartItems.reduce((sum, item) => sum + (item.vendorCommission / 100) * item.price * item.quantity, 0) // Calculate the total commission
     };
+    
 
     if (paymentMethod === 'Online') {
       handleOnlinePayment(orderData);
