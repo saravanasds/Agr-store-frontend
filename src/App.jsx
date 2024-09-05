@@ -16,6 +16,8 @@ import Login from "./Pages/Login"
 import Cart from "./Components/NavbarComponents/Cart"
 import Register from './Pages/Register'
 import ProductDetail from './Pages/ProductDetails'
+import ForgotPassword from './Pages/forgotPassword'
+import ResetPassword from './Pages/ResetPassword'
 
 function App() {
   return (
@@ -30,7 +32,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<Register />} />
             <Route path='/login' element={<Login />} />
-
+            <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/verifyRandomString/:randomString" element={<ResetPassword />} />
 
 
             <Route path='/order-status' element={<OrderStatus />} />

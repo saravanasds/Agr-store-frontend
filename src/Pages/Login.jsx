@@ -78,7 +78,7 @@ function Login() {
               />
             </div>
             <div className="flex items-center justify-between">
-              <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+              <a href="/forgotPassword" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
             </div>
             <button
               type="submit"
@@ -89,7 +89,7 @@ function Login() {
             </button>
 
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-[#3E4095]">Sign up</a>
+              Don’t have an account yet? <a href="/register" className="font-medium text-primary-600 hover:underline dark:text-[#3E4095]">Sign up</a>
             </p>
           </form>
         </div>

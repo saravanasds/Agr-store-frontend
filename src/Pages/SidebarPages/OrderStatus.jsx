@@ -32,7 +32,7 @@ const OrderStatus = () => {
             <h1 className="text-2xl font-semibold mb-4">Your Orders</h1>
             <div className="flex flex-col ">
                 {orders.length > 0 ? (
-                    orders.map((order, index) => (
+                    orders.slice().reverse().map((order, index) => (
                         <div key={index} className="p-4 mb-4 bg-slate-200 shadow-md shadow-gray-400 rounded-lg flex justify-between items-center px-8">
                             <div className="">
                                 <h3 className="font-semibold">Products:</h3>
@@ -52,7 +52,6 @@ const OrderStatus = () => {
                                 <p className='mb-2'><strong>Total Amount:</strong> &#x20B9; {order.totalAmount}</p>
                                 <p><strong>Status:</strong> <span className='text-gray-400 font-semibold'>{order.orderStatus}</span></p>
                             </div>
-
                         </div>
                     ))
                 ) : (

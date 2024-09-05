@@ -3,10 +3,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { IoWallet, IoCart, IoPerson, IoLogOut } from 'react-icons/io5';
 import { IoHome, IoStatsChart } from 'react-icons/io5';
 import { SlClose } from "react-icons/sl";
+import axios from "axios";
 
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar, sidebarRef }) => {
   const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
+  const [userData, setUserData] = useState('');
   const navigate = useNavigate(); // Use useNavigate hook for navigation
 
   const handleSignOut = (event) => {
@@ -22,9 +25,26 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, sidebarRef }) => {
 
   useEffect(() => {
     const data = localStorage.getItem('userName');
-    console.log(data);
+    const userEmail = localStorage.getItem('userEmail');
+    setEmail(userEmail);
     setUser(data);
   }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/user/getSingleUser/${email}`);
+        setUserData(response.data);
+
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    };
+
+    if (email) {
+      fetchUserData();
+    }
+  }, [email]);
 
   return (
     <>
@@ -46,34 +66,34 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, sidebarRef }) => {
           <div className="text-center border-b-2 border-[rgb(255,181,36)] p-2 text-white mb-8 pb-8">
             <h2 className="text-xl font-bold my-2">Hi, {user}</h2>
             <h2 className="my-2">
-              FR408004 <span> {/* Dummy id */} </span>
+              {userData.referralId} <span> {/* Dummy id */} </span>
             </h2>
           </div>
           <nav className="space-y-2 text-white px-4">
-            <NavLink
+            {/* <NavLink
               to="/overview"
               className="flex items-center p-2 text-md hover:bg-gradient-to-r from-[rgb(57,73,75)] to-transparent rounded-full transition-colors px-4 tracking-wider"
               onClick={toggleSidebar}
             >
               <IoHome className="mr-2 text-xl text-[rgb(129,196,8)]" />
               Overview
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="/wallet"
               className="flex items-center p-2 text-md hover:bg-gradient-to-r from-[rgb(57,73,75)] to-transparent rounded-full transition-colors px-4 tracking-wider"
               onClick={toggleSidebar}
             >
               <IoWallet className="mr-2 text-xl text-[rgb(129,196,8)]" />
-              Wallet
+              Wallet - &#x20B9; {userData.userShare}
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/purchases"
               className="flex items-center p-2 text-md hover:bg-gradient-to-r from-[rgb(57,73,75)] to-transparent rounded-full transition-colors px-4 tracking-wider"
               onClick={toggleSidebar}
             >
               <IoCart className="mr-2 text-xl text-[rgb(129,196,8)]" />
               My Purchases
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="/order-status"
               className="flex items-center p-2 text-md hover:bg-gradient-to-r from-[rgb(57,73,75)] to-transparent rounded-full transition-colors px-4 tracking-wider"
@@ -82,14 +102,14 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, sidebarRef }) => {
               <IoStatsChart className="mr-2 text-xl text-[rgb(129,196,8)]" />
               Order Status
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/profile"
               className="flex items-center p-2 text-md hover:bg-gradient-to-r from-[rgb(57,73,75)] to-transparent rounded-full transition-colors px-4 tracking-wider"
               onClick={toggleSidebar}
             >
               <IoPerson className="mr-2 text-xl text-[rgb(129,196,8)]" />
               Profile
-            </NavLink>
+            </NavLink> */}
             <div>
               <button
                 onClick={(event) => {
