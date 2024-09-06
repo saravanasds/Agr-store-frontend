@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
-const QuantityPopup = ({ product, onClose, onAddToCart }) => {
+const QuantityPopup = ({ product, onClose, onAddToCart, loading }) => {
     const [quantity, setQuantity] = useState(1);
 
     const increaseQuantity = () => {
@@ -39,7 +40,11 @@ const QuantityPopup = ({ product, onClose, onAddToCart }) => {
                         )}
                         className="bg-[#3E4095] text-white px-5 py-1 rounded"
                     >
-                        Add to Cart
+                        {loading ? (
+                            <ClipLoader color={'#ffffff'} loading={loading} size={20} />
+                        ) : (
+                            '+ Add to cart'
+                        )}
                     </button>
                 </div>
             </div>

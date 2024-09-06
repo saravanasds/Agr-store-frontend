@@ -13,6 +13,12 @@ const Shop = () => {
   const [email, setEmail] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 25;
 
   useEffect(() => {
     const data = localStorage.getItem('userEmail');
@@ -78,8 +84,29 @@ const Shop = () => {
     }
   }, [department]);
 
+  // Filter products based on the search term
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = products.filter((product) =>
+        product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [searchTerm, products]);
+
+  // Get current products for the page
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const addToCart = async (productId, quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, vendorCommission) => {
     try {
+      setLoading(true);
       // Calculate the total balance based on the quantity
       const totalBalance = balance * quantity;
 
@@ -104,6 +131,7 @@ const Shop = () => {
     } catch (error) {
       console.error('Error adding to cart:', error);
     } finally {
+      setLoading(false);
       closePopup();
     }
   };
@@ -150,6 +178,16 @@ const Shop = () => {
 
       <div className='px-0.5 py-5 md:p-10'>
         <h1 className='text-4xl font-bold px-4 mb-8 text-center tracking-wider text-[rgb(129,196,8)] capitalize'>Shop from department</h1>
+        {/* Search input */}
+        <div className="mb-4 text-end">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)} // Update the search term
+            className="w-full md:w-1/3 p-2 border border-gray-300 rounded"
+          />
+        </div>
         <div className="bg-[rgb(232,236,243)] md:p-2 rounded">
           <div className="flex flex-col md:flex-row ">
             {/* category section */}
@@ -185,7 +223,7 @@ const Shop = () => {
             {/* Product section */}
             <div className="w-full md:w-[85%] p-2 md:p-4">
               <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 place-items-center ">
-                {filteredProducts.map((product) => (
+                {currentProducts.map((product) => (
                   <div
                     key={product._id}
                     className="w-[220px] h-[320px] bg-white rounded-lg shadow-md hover:shadow-lg hover:shadow-gray-400 border border-[#3E4095] transition-transform duration-1000 transform "
@@ -210,7 +248,7 @@ const Shop = () => {
                         <div className="w-[90%] flex items-center justify-between bottom-2 left-[10px] absolute">
                           <button
                             className="w-full bg-green-500 border-2 text-white py-1 px-2 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-sm tracking-wider"
-                            onClick={() => openPopup(product)}
+                            onClick={email ? () => openPopup(product) : () => alert("Please Sign In Your Account")}
                           >
                             + Add to Cart
                           </button>
@@ -220,6 +258,18 @@ const Shop = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Pagination Controls */}
+              <div className="flex justify-center mt-4">
+                <ul className="flex list-none">
+                  {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, index) => (
+                    <li key={index + 1} className={`mx-2 cursor-pointer px-2 py-1 border rounded-full text-sm ${currentPage === index + 1 ? 'bg-[rgb(62,64,149)] text-white' : 'bg-white text-[rgb(62,64,149)]'}`} onClick={() => paginate(index + 1)}>
+                      {index + 1}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
             </div>
             {/* Render the popup if it is open */}
             {isPopupOpen && (
@@ -227,6 +277,7 @@ const Shop = () => {
                 product={selectedProduct}
                 onClose={closePopup}
                 onAddToCart={addToCart}
+                loading={loading}
               />
             )}
           </div>

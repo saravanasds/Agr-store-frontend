@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -9,6 +10,7 @@ const Cart = () => {
   const [previewOrder, setPreviewOrder] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [discount, setDiscount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const data = localStorage.getItem('userEmail');
@@ -119,6 +121,7 @@ const Cart = () => {
   };
 
   const handlePlaceOrder = async () => {
+    setLoading(true);
     const orderData = {
       email: email,
       products: cartItems.map(item => {
@@ -145,7 +148,7 @@ const Cart = () => {
       mobileNumber: formData.mobileNumber,
       pincode: formData.pincode,
       totalAmount: totalValue,
-      discount: discount,
+      discount: discount || 0,
       paymentMethod: paymentMethod,
       totalCommission: cartItems.reduce((sum, item) => sum + (item.vendorCommission / 100) * item.price * item.quantity, 0),
     };
@@ -171,6 +174,9 @@ const Cart = () => {
       } catch (error) {
         console.error('Error placing order:', error);
         alert('Failed to place the order. Please try again.');
+      }
+      finally{
+        setLoading(false);
       }
     }
   };
@@ -459,7 +465,11 @@ const Cart = () => {
               onClick={handlePlaceOrder}
               className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mt-4"
             >
-              Place Order
+             {loading ? (
+                <ClipLoader color={'#ffffff'} loading={loading} size={20} />
+              ) : (
+                'Place Order'
+              )}
             </button>
           </div>
         </div>

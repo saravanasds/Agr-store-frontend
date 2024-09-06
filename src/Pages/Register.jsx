@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
     const [name, setName] = useState('');
@@ -14,6 +15,7 @@ function Register() {
 
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
 
 
@@ -48,8 +50,9 @@ function Register() {
 
         try {
             const response = await axios.post('http://localhost:5000/api/user/register', userData);
-            console.log('User registered:', response.data);
+            // console.log('User registered:', response.data);
             toast.success('User registered successfully!');
+            navigate('/login');
         } catch (error) {
             if (error.response) {
                 const { message } = error.response.data;
@@ -77,79 +80,80 @@ function Register() {
             <div className='w-full bg-gray-300 '>
                 {/* <h1 className='text-center text-4xl font-bold tracking-widest pt-10 text-gray-700'>User Register </h1> */}
                 <form onSubmit={handleSubmit} className=' p-10'>
-                    <div className="w-full flex flex-col md:gap-10 justify-center items-center">
-                        <div className='w-full md:w-[30%] border border-black p-8'>
+                    <div className="w-full md:w-[40%] mx-auto flex flex-col md:gap-10 justify-center items-center p-6 px-12 border border-black rounded-lg shadow-lg shadow-gray-500 bg-gray-200">
+                        <h1 className='text-3xl font-semibold tracking-wider'>Sign Up </h1>
+                        <div className='w-full '>
 
-                            <div className="mb-3">
+                            <div className="mb-1">
                                 <input
                                     type="text"
                                     placeholder='Name'
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className='border border-gray-400 rounded py-2 px-3 mb-3 w-full '
+                                    className='border border-gray-400 rounded py-2 px-3 mb-1 w-full'
                                 />
                                 {errors.name && <p className="text-red-500 text-xs -mt-2">{errors.name}</p>}
                             </div>
 
 
-                            <div className="mb-3">
+                            <div className="mb-1">
                                 <input
                                     type="email"
                                     placeholder='Email'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className='border border-gray-400 rounded py-2 px-3 mb-3 w-full '
+                                    className='border border-gray-400 rounded py-2 px-3 mb-1 w-full '
                                 />
                                 {errors.email && <p className="text-red-500 text-xs -mt-2">{errors.email}</p>}
                             </div>
 
 
-                            <div className="mb-3">
+                            <div className="mb-1">
                                 <input
                                     type="number"
                                     placeholder='Mobile Number'
                                     value={mobileNumber}
                                     onChange={(e) => setMobileNumber(e.target.value)}
-                                    className='border border-gray-400 rounded py-2 px-3 mb-3 w-full '
+                                    className='border border-gray-400 rounded py-2 px-3 mb-1 w-full '
                                 />
                                 {errors.mobileNumber && <p className="text-red-500 text-xs -mt-2">{errors.mobileNumber}</p>}
                             </div>
 
 
-                            <div className="mb-3">
+                            <div className="mb-1">
                                 <input
                                     type="text"
                                     placeholder='Referred By'
                                     value={referredBy}
                                     onChange={(e) => setReferredBy(e.target.value)}
-                                    className='border border-gray-400 rounded py-2 px-3 mb-3 w-full'
+                                    className='border border-gray-400 rounded py-2 px-3 mb-1 w-full'
                                 />
                             </div>
 
-                            <div className="mb-3">
+                            <div className="mb-1">
                                 <input
                                     type="password"
                                     placeholder='Password'
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className='border border-gray-400 rounded py-2 px-3 mb-3 w-full '
+                                    className='border border-gray-400 rounded py-2 px-3 mb-1 w-full '
                                 />
                                 {errors.password && <p className="text-red-500 text-xs -mt-2">{errors.password}</p>}
                             </div>
 
-                            <div className="mb-3">
+                            <div className="mb-1">
                                 <input
                                     type="password"
                                     placeholder='Confirm Password'
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
-                                    className='border border-gray-400 rounded py-2 px-3 mb-3 w-full '
+                                    className='border border-gray-400 rounded py-2 px-3 mb-1 w-full '
                                 />
                                 {errors.confirmPassword && <p className="text-red-500 text-xs -mt-2">{errors.confirmPassword}</p>}
                             </div>
 
                             <div className=' flex justify-center items-center mt-4'>
-                                <button type="submit" className="bg-[#3E4095] hover:bg-[#4e51d4] text-white py-2 px-20 rounded tracking-wider">
+                                <button type="submit" className="bg-[#3E4095] hover:bg-[#4e51d4] text-white py-2 px-20 rounded tracking-wider font-semibold">
                                     {loading ? (
                                         <ClipLoader color={'#ffffff'} loading={loading} size={20} />
                                     ) : (

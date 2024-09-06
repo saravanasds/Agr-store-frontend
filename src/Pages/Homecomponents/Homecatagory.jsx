@@ -32,16 +32,18 @@ const Homecatagory = () => {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
           {departments.map((department, index) => (
             <div key={index} className="bg-[rgb(244,246,248)] rounded-xl overflow-hidden shadow-lg hover:scale-[1.1] transform transition-all duration-300">
-              <div className="w-full h-[200px] flex justify-center items-center">
-                <img
-                  className="w-full h-full object-cover rounded-full"
-                  src={department.departmentImage}
-                  alt={`Slide ${index}`}
-                />
-              </div>
-              <div className="w-full text-center py-5 text-[rgb(69,89,91)]">
-                <h2 className="text-xl font-semibold">{department.department}</h2>
-              </div>
+              <a href={`/shop/${department.department}`}>
+                <div className="w-full h-[200px] flex justify-center items-center">
+                  <img
+                    className="w-full h-full object-cover rounded-full"
+                    src={department.departmentImage}
+                    alt={`Slide ${index}`}
+                  />
+                </div>
+                <div className="w-full text-center py-5 text-[rgb(69,89,91)]">
+                  <h2 className="text-xl font-semibold">{department.department}</h2>
+                </div>
+              </a>
             </div>
           ))}
         </div>

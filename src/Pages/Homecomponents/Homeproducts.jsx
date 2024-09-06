@@ -45,15 +45,17 @@ const DepartmentsTab = () => {
 
   return (
     <>
-    <div className='w-full mt-10'>
-      <h1 className='w-full text-center text-5xl font-bold tracking-wider text-[#3E4095]'>Shop By Categories</h1>
-    </div>
+      <div className='w-full mt-10'>
+        <h1 className='w-full text-center text-5xl font-bold tracking-wider text-[#3E4095]'>Shop By Categories</h1>
+      </div>
       {departments.map((department) => (
         <div key={department.department} className="mx-auto py-10 w-full min-h-[500px] px-10 ">
-          <h1 className="text-2xl font-bold text-center lg:text-left mb-4 text-[rgb(129,196,8)]">{department.department}</h1>
-          <div className="tab-content py-8 bg-[rgb(244,246,248)] rounded-lg shadow-md">
-            <TabContent categories={categoriesByDepartment[department.department] || []} />
-          </div>
+          <a href={`/shop/${department.department}`}>
+            <h1 className="text-2xl font-bold text-center lg:text-left mb-4 text-[rgb(129,196,8)]">{department.department}</h1>
+            <div className="tab-content py-8 bg-[rgb(244,246,248)] rounded-lg shadow-md">
+              <TabContent categories={categoriesByDepartment[department.department] || []} />
+            </div>
+          </a>
         </div>
       ))}
     </>
