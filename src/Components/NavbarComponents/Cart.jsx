@@ -170,12 +170,13 @@ const Cart = () => {
             pincode: '',
           });
           setPreviewOrder(false); // Disable preview mode
+          window.location.reload();
         }
       } catch (error) {
         console.error('Error placing order:', error);
         alert('Failed to place the order. Please try again.');
       }
-      finally{
+      finally {
         setLoading(false);
       }
     }
@@ -222,6 +223,7 @@ const Cart = () => {
                 pincode: '',
               });
               setPreviewOrder(false); // Disable preview mode
+              window.location.reload();
             }
           } catch (error) {
             console.error('Error processing payment and placing order:', error);
@@ -342,17 +344,24 @@ const Cart = () => {
                   <p>Your wallet balance is {discount ? "0" : <span className='font-semibold'>&#x20B9;{(walletBalance).toFixed(2)}</span>}</p>
                   {
                     discount ? "" :
-                      <div className='flex gap-2'>
-                        <p className='flex items-center gap-2'><del className='text-sm'>&#x20B9;{totalValue}</del> <span className='font-semibold text-xl'>&#x20B9;{(totalValue - walletBalance).toFixed(2)}</span></p>
+                      <div className='flex gap-4 items-center'>
+                        <p className='flex items-center gap-2'>
+                          <del className='text-sm'>&#x20B9;{totalValue}</del>
+                          <span className='font-semibold text-xl'>&#x20B9;{(totalValue - walletBalance).toFixed(2)}</span>
+                        </p>
                         <button
                           onClick={discountApply}
-                          className='bg-green-600 text-white px-8 py-1 text-sm rounded-sm'
+                          className={`bg-green-600 text-white px-8 py-1 text-sm rounded ${walletBalance <= 100 || totalValue < walletBalance ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-800'}`}
+                          disabled={walletBalance <= 100 || totalValue < walletBalance}
                         >
                           Apply
                         </button>
+                        {walletBalance <= 100 && <p className='text-sm text-red-500'>You can apply only if your wallet balance is above ₹ 100.00</p>}
+                        {totalValue < walletBalance && <p className='text-sm text-red-500'>Your total amount is less than the wallet balance.</p>}
                       </div>
                   }
                 </div>
+
               )}
               <div className='flex items-center gap-10'>
                 <h2 className="text-lg font-semibold ">Choose Payment Method:</h2>
@@ -396,7 +405,7 @@ const Cart = () => {
             </div>
           </div>
         ) : (
-          <div className="text-center py-10">
+          <div className="w-full min-h-[50vh] flex flex-col justify-center items-center text-center py-10">
             <h2 className="text-2xl font-bold mb-4">Your Cart is Empty</h2>
             <p className="text-gray-600">Add some items to your cart before placing an order.</p>
           </div>
@@ -406,48 +415,6 @@ const Cart = () => {
       {previewOrder && (
         <div className="w-full mx-auto p-4 flex flex-col justify-center items-center mb-10">
           <h2 className="w-[80%] text-2xl font-semibold mb-4 text-left pt-10">Order Preview:</h2>
-          {/* <div className="w-[80%] overflow-x-auto">
-            <table className="w-full bg-white shadow-md rounded-lg">
-              <thead>
-                <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-center">Image</th>
-                  <th className="py-3 px-6 text-center">Product Name</th>
-                  <th className="py-3 px-6 text-center">Price</th>
-                  <th className="py-3 px-6 text-center">Quantity</th>
-                  <th className="py-3 px-6 text-center">Total</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm">
-                {cartItems.map((item) => (
-                  <tr key={item.productId._id} className="border-b border-gray-200 hover:bg-gray-100">
-                    <td className="py-3 px-6 text-left whitespace-nowrap">
-                      <div className="flex items-center justify-center ">
-                        <img src={item.productImage} alt={item.productId.productName} className="w-12 h-12 object-cover mr-4 rounded border border-gray-400" />
-                      </div>
-                    </td>
-
-                    <td className="py-3 px-6 text-center flex flex-col">
-                      <span className="text-gray-900 font-semibold">{item.productId.productName}</span>
-                      <span className='font-normal'>({item.quantity} {item.unit})</span>
-                    </td>
-
-                    <td className="py-3 px-6 text-center">
-                      <span className='text-gray-900 font-semibold'>&#x20B9; {item.price}</span> <br />
-                      <span>(1 {item.unit})</span>
-                    </td>
-
-                    <td className="py-3 px-6 text-center">
-                      <span className="px-3 py-1">{item.quantity}</span>
-                    </td>
-
-                    <td className="py-3 px-6 text-center">
-                      &#x20B9; {item.quantity * item.price}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div> */}
 
           <div className="w-[80%] bg-white shadow-md rounded-lg mt-4 p-4">
             <h2 className="flex items-center gap-1 text-lg font-semibold mb-2">
@@ -465,7 +432,7 @@ const Cart = () => {
               onClick={handlePlaceOrder}
               className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mt-4"
             >
-             {loading ? (
+              {loading ? (
                 <ClipLoader color={'#ffffff'} loading={loading} size={20} />
               ) : (
                 'Place Order'
