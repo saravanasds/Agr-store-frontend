@@ -89,7 +89,7 @@ const ProductDetail = () => {
   if (!product) return <div className='w-full min-h-[50vh]'>Loading...</div>;
 
   return (
-    <div className="p-4 md:p-10">
+    <div className="w-full min-h-screen flex justify-center items-start mt-10 p-4 md:p-10">
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/2">
@@ -100,14 +100,14 @@ const ProductDetail = () => {
             />
           </div>
           <div className="w-full md:w-1/2 p-6">
-            <h2 className="text-3xl font-bold mb-2">{product.productName}</h2>
-            <p className="text-gray-700 mb-4">{product.description}</p>
+            <h2 className="text-xl sm:text-3xl font-bold mb-2 capitalize">{product.productName}</h2>
+            <p className="text-gray-700 mb-4 capitalize">{product.description}</p>
             <div className="flex items-center text-sm justify-start mb-4">
               <span className=' text-gray-500'><del>&#x20B9;{product.actualPrice}</del></span>
               <span className="ml-1 font-semibold  text-lg">&#x20B9; {product.price}</span> <span className='font-normal text-gray-800'>({product.unit})</span>
             </div>
             <button
-              className=" bg-green-500 border-2 text-white py-2 px-4 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-lg tracking-wider"
+              className=" bg-green-500 border-2 text-white py-2 px-4 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-sm sm:text-lg tracking-wider"
               onClick={email ? () => openPopup(product) : () => alert("Please Sign In Your Account")}
             >
               {loading ? (

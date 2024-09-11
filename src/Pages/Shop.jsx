@@ -146,25 +146,34 @@ const Shop = () => {
     setSelectedProduct(null);
   };
 
+  const scrolltoTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   return (
-    <div>
-      <div className='relative h-[150px] md:h-[200px] m-2 md:m-6 w-auto rounded-lg overflow-hidden bg-white '>
-        <h1 className='relative z-10 flex items-center justify-center h-full w-full text-black text-4xl md:text-6xl font-bold capitalize'>
+    <div className=''>
+      <div className="relative h-[150px] md:h-[200px]  w-auto rounded-lg overflow-hidden bg-white">
+        <h1 className="relative z-10 flex items-center justify-center h-full w-full text-black text-xl sm:text-4xl md:text-6xl font-bold capitalize">
           {department}
         </h1>
       </div>
 
+      {/* Department Tabs */}
+
       <div className="fixed bottom-0 left-0 right-0 z-10 w-full md:sticky md:top-24 md:m-auto md:bottom-auto h-auto">
-        <div className="w-full h-full">
-          <ul className="flex flex-wrap justify-evenly gap-2 md:gap-4 md:py-3 px-2 md:px-0 bg-[#3E4095] overflow-x-auto">
+        <div className="w-full h-full bg-[#3E4095] overflow-x-auto py-3 md:py-1 px-1">
+          <ul className="w-full flex gap-2 md:gap-4 md:py-3 justify-around ">
             {departments.map((department, index) => (
-              <li key={index} className="flex items-center gap-2 text-center text-sm tracking-wider capitalize">
+              <li
+                key={index}
+                className="text-center text-xs md:text-sm capitalize"
+              >
                 <NavLink
                   to={`/shop/${department.department}`}
                   className={({ isActive }) =>
                     isActive
-                      ? 'bg-[rgb(129,196,8)] text-white font-bold py-1 px-10  shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center flex-col lg:flex-row border-white border-[1px]'
-                      : 'text-white py-1 px-10  border-gray-400 border-[1px] font-medium hover:bg-[rgba(255,255,255,0.1)] hover:shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center flex-col lg:flex-row'
+                      ? 'bg-[rgb(129,196,8)] text-white font-bold py-1 px-2 md:px-10 shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 border-white border-[1px] text-[10px] sm:text-sm whitespace-nowrap'
+                      : 'text-white py-1 px-2 md:px-10 border-gray-400 border-[1px] font-medium hover:bg-[rgba(255,255,255,0.1)] hover:shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 text-[10px] sm:text-sm whitespace-nowrap'
                   }
                 >
                   {department.department}
@@ -176,40 +185,68 @@ const Shop = () => {
       </div>
 
 
-      <div className='px-0.5 py-5 md:p-10'>
-        <h1 className='text-4xl font-bold px-4 mb-8 text-center tracking-wider text-[rgb(129,196,8)] capitalize'>Shop from department</h1>
+      <div className="px-0.5 py-5 md:p-10">
+        <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold px-4 mb-4 sm:mb-8 text-center tracking-wider text-[rgb(129,196,8)] capitalize">
+          Shop from department
+        </h1>
+
         {/* Search input */}
-        <div className="mb-4 text-end">
+        <div className=" mb-4 text-center">
           <input
             type="text"
             placeholder="Search products..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)} // Update the search term
-            className="w-full md:w-1/3 p-2 border border-gray-300 rounded"
+            className="w-[90%] lg:w-1/3 sm:p-2 p-1 px-2 border border-gray-300 rounded text-sm sm:text-lg"
           />
         </div>
+
+        {/* Horizontal Category Tabs for Mobile */}
+        <div className="md:hidden mb-4 overflow-x-auto py-2 px-1 bg-white shadow-lg">
+          <ul className="flex gap-1 sm:gap-3">
+            <li
+              key="all-products"
+              className="cursor-pointer bg-gray-300 py-1 px-4 rounded text-xs sm:text-sm whitespace-nowrap"
+              onClick={() => setFilteredProducts(products)}
+            >
+              All Products
+            </li>
+            {categories.map((category) => (
+              <li
+                key={category._id}
+                className="cursor-pointer bg-gray-300 py-1 px-4 rounded capitalize text-xs sm:text-sm whitespace-nowrap"
+                onClick={() => {
+                  const filtered = products.filter(
+                    (product) => product.category === category.category
+                  );
+                  setFilteredProducts(filtered);
+                }}
+              >
+                {category.category}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+
+
         <div className="bg-[rgb(232,236,243)] md:p-2 rounded">
-          <div className="flex flex-col md:flex-row ">
-            {/* category section */}
-            <div className="hidden md:block md:w-[15%] bg-white p-2 rounded shadow-md ">
-              <h2 className="w-full text-lg font-semibold mb-4 bg-slate-400 text-white text-center py-1 tracking-wider rounded capitalize">Categories</h2>
-              <ul className='px-4'>
-                {/* "All Products" tab */}
-                <li
-                  key="all-products"
-                  className="mb-2 cursor-pointer"
-                  onClick={() => setFilteredProducts(products)}
-                >
+          <div className="flex flex-col md:flex-row">
+            {/* Category section for desktop only */}
+            <div className="hidden md:block w-[30%] xl:w-[15%] bg-white p-2 rounded shadow-md">
+              <h2 className="w-full text-lg font-semibold mb-4 bg-slate-400 text-white text-center py-1 tracking-wider rounded capitalize">
+                Categories
+              </h2>
+              <ul className="px-4">
+                <li key="all-products" className="mb-2 cursor-pointer" onClick={() => setFilteredProducts(products)}>
                   All Products
                 </li>
-
-                {/* Other categories */}
                 {categories.map((category) => (
                   <li
                     key={category._id}
                     className="mb-2 cursor-pointer capitalize"
                     onClick={() => {
-                      const filtered = products.filter(product => product.category === category.category);
+                      const filtered = products.filter((product) => product.category === category.category);
                       setFilteredProducts(filtered);
                     }}
                   >
@@ -219,36 +256,39 @@ const Shop = () => {
               </ul>
             </div>
 
-
             {/* Product section */}
-            <div className="w-full md:w-[85%] p-2 md:p-4">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-4 place-items-center ">
+            <div className="w-[95%] md:w-[85%] p-2 md:p-4 mb-2 mx-auto py-6">
+              <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-5 gap-2 md:gap-4 place-items-center">
                 {currentProducts.map((product) => (
                   <div
                     key={product._id}
-                    className="w-[220px] h-[320px] bg-white rounded-lg shadow-md hover:shadow-lg hover:shadow-gray-400 border border-[#3E4095] transition-transform duration-1000 transform "
+                    className="w-full md:w-[220px] h-[200px] sm:h-[250px] md:h-[320px] bg-white rounded-lg shadow-md hover:shadow-lg hover:shadow-gray-400 border border-[#3E4095] transition-transform duration-1000 transform"
+                    onClick={scrolltoTop}
                   >
                     <Link to={`/product/${product._id}`} key={product._id}>
-                      <div className="w-[220px] h-[200px] overflow-hidden rounded-t-lg p-2 shadow-md">
+                      <div className="w-full h-[120px] sm:h-[150px] md:h-[200px] overflow-hidden rounded-t-lg p-1 sm:p-2 shadow-md">
                         <img
                           src={product.productImage}
                           alt={product.productName}
-                          className="w-[220px] h-[182px] object-cover transition-transform duration-1000 transform hover:scale-105 rounded-t-lg border border-gray-300 overflow-hidden"
+                          className="w-full h-[110px] sm:h-[260px] md:h-[182px] object-cover transition-transform duration-1000 transform hover:scale-105 rounded-t-lg border border-gray-300 overflow-hidden"
                         />
                       </div>
                     </Link>
-                    <div className="p-2 flex text-center flex-col ">
+                    <div className="p-2 flex text-left sm:text-center flex-col">
                       <h3 className="text-xs md:text-[16px] font-semibold capitalize">{product.productName}</h3>
-                      <p className="text-xs md:text-gray-700 mb-1 capitalize"> {product.description} </p>
-                      <div className="flex items-center text-sm justify-center ">
-                        <span className=' text-gray-500'><del>&#x20B9;{product.actualPrice}</del></span>
-                        <span className="ml-1 font-semibold  text-lg">&#x20B9; {product.price}</span> <span className='font-normal text-gray-800'>({product.unit})</span>
+                      <p className="hidden md:block text-xs md:text-gray-700 mb-1 capitalize"> {product.description} </p>
+                      <div className="flex items-center text-xs sm:text-sm md:text-lg justify-start sm:justify-center">
+                        <span className="text-gray-500 text-[10px] sm:text-sm md:text-lg">
+                          <del>&#x20B9;{product.actualPrice}</del>
+                        </span>
+                        <span className="ml-1 font-semibold text-xs sm:text-sm md:text-lg">&#x20B9; {product.price}</span>{' '}
+                        <span className="font-normal text-gray-800">({product.unit})</span>
                       </div>
-                      <div className='w-full flex justify-center items-center '>
-                        <div className="w-[90%] flex items-center justify-between bottom-2 left-[10px] absolute">
+                      <div className="w-full flex justify-center items-center ">
+                        <div className="w-[90%] flex items-center justify-between bottom-2 absolute">
                           <button
-                            className="w-full bg-green-500 border-2 text-white py-1 px-2 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-sm tracking-wider"
-                            onClick={email ? () => openPopup(product) : () => alert("Please Sign In Your Account")}
+                            className="w-full bg-green-500 border-2 text-white py-1 px-2 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-[10px] sm:text-sm tracking-wider"
+                            onClick={email ? () => openPopup(product) : () => alert('Please Sign In Your Account')}
                           >
                             + Add to Cart
                           </button>
@@ -263,14 +303,19 @@ const Shop = () => {
               <div className="flex justify-center mt-4">
                 <ul className="flex list-none">
                   {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, index) => (
-                    <li key={index + 1} className={`mx-2 cursor-pointer px-2 py-1 border rounded-full text-sm ${currentPage === index + 1 ? 'bg-[rgb(62,64,149)] text-white' : 'bg-white text-[rgb(62,64,149)]'}`} onClick={() => paginate(index + 1)}>
+                    <li
+                      key={index + 1}
+                      className={`mx-1 sm:mx-2 cursor-pointer px-2 py-1 border rounded-full text-xs sm:text-sm ${currentPage === index + 1 ? 'bg-[rgb(62,64,149)] text-white' : 'bg-white text-[rgb(62,64,149)]'
+                        }`}
+                      onClick={() => paginate(index + 1)}
+                    >
                       {index + 1}
                     </li>
                   ))}
                 </ul>
               </div>
-
             </div>
+
             {/* Render the popup if it is open */}
             {isPopupOpen && (
               <QuantityPopup
@@ -284,6 +329,7 @@ const Shop = () => {
         </div>
       </div>
     </div>
+
   );
 }
 

@@ -61,11 +61,6 @@ function Navbar() {
 
   console.log('Cart items:', cartItems);  // Debugging
 
-
-  const toggleSearchBar = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -78,9 +73,6 @@ function Navbar() {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const toggleSlidebar = () => {
-    setIsSearchSlideVisible(!isSearchSlideVisible);
-  };
 
   const handleClickOutside = (event) => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -116,22 +108,25 @@ function Navbar() {
 
   return (
     <>
-      <div className="sticky top-0 z-50 shadow shadow-[rgb(69,89,91)] bg-white h-24">
-        <div className="flex justify-between items-center h-full w-[100%] py-2 font-semibold px-20">
-          <div
-            className="lg:hidden text-2xl md:text-4xl text-[rgb(129,196,8)] cursor-pointer"
-            onClick={toggleMobileMenu}
-          >
-            <GiHamburgerMenu />
+      <div className="sticky top-0 z-50 shadow shadow-[rgb(69,89,91)] bg-white h-16 sm:h-24">
+        <div className="flex justify-between items-center h-full w-[100%] py-2 font-semibold px-4 md:px-10 lg:px-20">
+
+          <div className="flex gap-3 items-center">
+            <div
+              className="md:hidden text-2xl sm:text-3xl  text-[rgb(129,196,8)] cursor-pointer"
+              onClick={toggleMobileMenu}
+            >
+              <GiHamburgerMenu />
+            </div>
+
+            <div className="">
+              <NavLink to="/">
+                <img src="/src/Accets/agr-logo.png" alt="Logo" className="w-20 h-6 sm:w-32 sm:h-10 lg:w-40 lg:h-12" />
+              </NavLink>
+            </div>
           </div>
 
-          <div className="">
-            <NavLink to="/">
-              <img src="/src/Accets/agr-logo.png" alt="Logo" className="w-40 h-12" />
-            </NavLink>
-          </div>
-
-          <div className="md:w-auto text-lg hidden lg:flex justify-center items-center gap-3 text-gray-500 tracking-wider ">
+          <div className="md:w-auto text-lg hidden md:flex justify-center items-center gap-3 text-gray-500 tracking-wider ">
             <NavLink
               to="/"
               className={({ isActive }) =>
@@ -150,63 +145,38 @@ function Navbar() {
           </div>
 
           <div className="flex items-center justify-end">
-            <div className="flex gap-2 md:gap-5 text-[rgb(129,196,8)]">
-              <div className="relative lg:flex hidden items-center" ref={searchRef}>
-                <button
-                  className={`border-[#3E4095] border-[2px] text-xl rounded-full p-2 bg-white transition-transform duration-500 ${isExpanded ? "translate-x-0" : ""
-                    }`}
-                  onClick={toggleSearchBar}
-                >
-                  <IoSearch />
-                </button>
-                <input
-                  type="text"
-                  className={`absolute right-0 border-2 border-[#3E4095] text-xl rounded-full p-2 bg-white transition-all duration-500 ${isExpanded ? "opacity-100 w-64 px-4" : "opacity-0 w-0"
-                    }`}
-                  style={{ zIndex: isExpanded ? 100 : -100 }}
-                  placeholder="Search..."
-                />
-              </div>
-
-              <div className="lg:hidden flex items-center">
-                <div
-                  className="border-[rgb(255,181,36)] border-[1px] rounded-full p-1 md:p-2 bg-white transition-transform duration-500"
-                  onClick={toggleSlidebar}
-                >
-                  <IoSearch />
-                </div>
-              </div>
+            <div className="flex gap-3 sm:gap-4 md:gap-8 text-[rgb(129,196,8)]">
 
               <NavLink to="/cart" className="flex items-center">
                 <div className="relative">
-                  <FaShoppingCart className="w-8 h-8" />
-                  <div className="absolute bg-[#3E4095] w-[20px] h-[20px] -top-1 -right-1 rounded-full flex justify-center items-center">
+                  <FaShoppingCart className="w-6 h-6 sm:w-8 sm:h-8" />
+                  <div className="absolute bg-[#3E4095] w-[16px] h-[16px] sm:w-[20px] sm:h-[20px] -top-[2px] -right-[2px] sm:-top-1 sm:-right-1 rounded-full flex justify-center items-center">
                     <span className="text-sm text-white">{cartItems.length}</span>
                   </div>
                 </div>
               </NavLink>
 
               {token ? (
-                <div className="flex justify-center items-center gap-2">
+                <div className="sm:flex justify-center items-center gap-2">
 
-                  <div className="flex justify-center items-center gap-2 border border-black rounded-md py-1 px-3">
-                    <span>Welcome {user}</span>
+                  <div className="flex justify-center items-center gap-2 sm:border border-black sm:rounded-md sm:py-1 sm:px-3 text-xs sm:text-lg">
+                    <span className="hidden sm:block">Welcome {user}</span>
                     <a href="#" className="flex items-center" onClick={toggleSidebar}>
                       <MdAccountCircle className="w-8 h-8 text-gray-500" />
                     </a>
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-center items-center gap-2">
+                <div className="hidden sm:flex justify-center items-center gap-1 sm:gap-2">
                   <a
                     href="/register"
-                    className="bg-gray-400 text-white px-4 py-2 rounded-3xl hover:bg-gray-500"
+                    className="bg-gray-400 text-white px-4 py-2 sm:py-3 rounded-3xl hover:bg-gray-500 text-xs sm:text-[16px]"
                   >
                     Sign Up
                   </a>
                   <a
                     href="/login"
-                    className="bg-[#3E4095] text-white px-4 py-2 rounded-3xl hover:bg-[#4749ae]"
+                    className="bg-[#3E4095] text-white px-4 py-2 sm:py-3 rounded-3xl hover:bg-[#4749ae] text-xs sm:text-[16px]"
                   >
                     Sign In
                   </a>
@@ -232,12 +202,14 @@ function Navbar() {
       <MobileMenu
         isMobileMenuOpen={isMobileMenuOpen}
         toggleMobileMenu={toggleMobileMenu}
+        token={token}
       />
 
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar}
         handleSignOut={handleSignOut}
+        token={token}
       />
     </>
   );

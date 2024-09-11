@@ -45,14 +45,14 @@ const DepartmentsTab = () => {
 
   return (
     <>
-      <div className='w-full mt-10'>
-        <h1 className='w-full text-center text-5xl font-bold tracking-wider text-[#3E4095]'>Shop By Categories</h1>
+      <div className='w-[90%] mx-auto mt-6 sm:mt-10'>
+        <h1 className='w-full text-left sm:text-center text-lg sm:text-2xl md:text-5xl font-semibold tracking-wider text-[#3E4095]'>Shop By Categories</h1>
       </div>
       {departments.map((department) => (
-        <div key={department.department} className="mx-auto py-10 w-full min-h-[500px] px-10 ">
+        <div key={department.department} className="mx-auto py-4 px-4 sm:py-10 w-full sm:min-h-[500px] sm:px-10">
           <a href={`/shop/${department.department}`}>
-            <h1 className="text-2xl font-bold text-center lg:text-left mb-4 text-[rgb(129,196,8)]">{department.department}</h1>
-            <div className="tab-content py-8 bg-[rgb(244,246,248)] rounded-lg shadow-md">
+            <h1 className="text-[16px] sm:text-2xl font-semibold text-left mb-2 sm:mb-4 text-[rgb(129,196,8)] tracking-wider">{department.department}</h1>
+            <div className="tab-content sm:py-8 bg-[rgb(244,246,248)] rounded-lg shadow-md">
               <TabContent categories={categoriesByDepartment[department.department] || []} />
             </div>
           </a>
@@ -63,12 +63,12 @@ const DepartmentsTab = () => {
 };
 
 const TabContent = ({ categories }) => (
-  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+  <div className="grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 p-3">
     {categories.map((category) => (
       <div key={category._id} className="flex flex-col justify-center items-center rounded overflow-hidden hover:scale-[1.05] transform transition-all duration-300 hover:shadow-md hover:shadow-gray-700 hover:bg-white py-2">
-        <img className="w-40 h-40 object-cover rounded-full border border-[rgb(255,181,36)]" src={category.categoryImage} alt={category.category} />
-        <div className="pt-4">
-          <div className=" bg-[rgb(129,196,8)] text-white px-2 py-1 rounded text-center">
+        <img className="w-[70px] h-[70px] xs:w-[110px] xs:h-[110px] sm:w-[150px] sm:h-[150px] object-cover rounded-full border border-[rgb(255,181,36)]" src={category.categoryImage} alt={category.category} />
+        <div className="pt-2 sm:pt-4">
+          <div className="text-[10px] sm:text-lg bg-[rgb(129,196,8)] text-white px-2 py-1 rounded text-center">
             {category.category}
           </div>
         </div>

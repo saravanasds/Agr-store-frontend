@@ -7,12 +7,12 @@ const Topbar = () => {
   return (
     <>
       <div className="hidden md:flex flex-col">
-        <div className="w-full bg-[rgb(129,196,8)] text-white lg:px-20 text-sm tracking-wider overflow-hidden py-2">
+        <div className="w-full bg-[rgb(129,196,8)] text-white md:px-20 text-sm tracking-wider  py-2">
           <div className="flex flex-col md:flex-row items-center justify-between">
 
             {/* Left Side: Address and Email */}
-            <div className="hidden md:flex   lg:justify-evenly md:justify-center items-center lg:gap-4">
-              <div className="hidden lg:flex items-center gap-2 text-[rgb(255,181,36)]">
+            <div className="md:flex lg:justify-evenly md:justify-center items-center md:gap-4">
+              <div className="md:flex items-center gap-2 text-[rgb(255,181,36)]">
                 <MdLocationPin className="text-[#3E4095] w-6 h-6 rounded-full mt-1" />
                 <a href="#" className="text-white">
                   123 Street, New York

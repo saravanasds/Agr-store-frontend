@@ -16,15 +16,15 @@ const QuantityPopup = ({ product, onClose, onAddToCart, loading }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-4 px-10 rounded shadow-lg">
-                <h2 className="text-xl mb-8">Select Quantity ({product.productName})</h2>
+            <div className="bg-white p-4 sm:px-10 rounded shadow-lg">
+                <h2 className="text-lg sm:text-xl mb-8">Select Quantity</h2>
                 <div className="flex items-center justify-between">
-                    <button onClick={decreaseQuantity} className="px-3 py-1 bg-red-500 rounded text-white text-xl font-bold">-</button>
-                    <span className="px-4">{quantity} {product.unit}</span>
-                    <button onClick={increaseQuantity} className="px-3 py-1 bg-green-500 rounded text-white text-xl font-bold">+</button>
+                    <button onClick={decreaseQuantity} className="sm:px-3 sm:py-1  py-0 px-2 bg-red-500 rounded text-white sm:text-xl font-bold">-</button>
+                    <span className="px-4 text-sm sm:text-xl">{quantity} {product.unit}</span>
+                    <button onClick={increaseQuantity} className="sm:px-3 sm:py-1  py-0 px-2 bg-green-500 rounded text-white sm:text-xl font-bold">+</button>
                 </div>
                 <div className="mt-6 flex justify-end">
-                    <button onClick={onClose} className="mr-4 bg-gray-300 px-5 py-1 rounded">Cancel</button>
+                    <button onClick={onClose} className="mr-4 bg-gray-300 px-5 py-1 rounded text-sm sm:text-lg">Cancel</button>
                     <button
                         onClick={() => onAddToCart(
                             product._id,
@@ -38,7 +38,7 @@ const QuantityPopup = ({ product, onClose, onAddToCart, loading }) => {
                             product.productCode,
                             product.vendorCommission
                         )}
-                        className="bg-[#3E4095] text-white px-5 py-1 rounded"
+                        className="bg-[#3E4095] text-white px-5 py-1 rounded text-sm sm:text-lg"
                     >
                         {loading ? (
                             <ClipLoader color={'#ffffff'} loading={loading} size={20} />

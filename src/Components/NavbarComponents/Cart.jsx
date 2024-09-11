@@ -11,6 +11,7 @@ const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [discount, setDiscount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [orderOpen, setOrderOpen] = useState(false);
 
   useEffect(() => {
     const data = localStorage.getItem('userEmail');
@@ -66,6 +67,10 @@ const Cart = () => {
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
+  }
+
+  const handleOrderOpen = () => {
+    setOrderOpen(!isOpen);
   }
 
   const calculateTotalPrice = () => {
@@ -260,48 +265,48 @@ const Cart = () => {
     <>
       {
         cartItems.length > 0 ? (
-          <div className="w-full mx-auto p-4 flex flex-col justify-center items-center mb-10">
-            <h1 className="w-[80%] text-2xl font-semibold mb-4 text-left pt-10">Your Cart Items List:</h1>
-            <div className="w-[80%] overflow-x-auto">
-              <table className="w-full bg-white shadow-md rounded-lg">
+          <div className="w-full mx-auto p-2 sm:p-4 flex flex-col justify-center items-center mb-10">
+            <h1 className="w-[95%] sm:w-[80%] text-lg sm:text-2xl font-semibold mb-4 text-left pt-10">Your Cart Items List:</h1>
+            <div className="w-[95%] sm:w-[80%] overflow-x-auto">
+              <table className="w-full bg-white shadow-md rounded-lg ">
                 <thead>
-                  <tr className="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-6 text-center">Image</th>
-                    <th className="py-3 px-6 text-center">Product Name</th>
-                    <th className="py-3 px-6 text-center">Price</th>
-                    <th className="py-3 px-6 text-center">Quantity</th>
-                    <th className="py-3 px-6 text-center">Action</th>
-                    <th className="py-3 px-6 text-center">Total</th>
+                  <tr className="w-full bg-gray-200 text-gray-600 uppercase text-[10px] sm:text-sm leading-normal">
+                    <th className="py-3 px-6 text-center whitespace-nowrap">Image</th>
+                    <th className="py-3 px-6 text-center whitespace-nowrap">Product Name</th>
+                    <th className="py-3 px-6 text-center whitespace-nowrap">Price</th>
+                    <th className="py-3 px-6 text-center whitespace-nowrap">Quantity</th>
+                    <th className="py-3 px-6 text-center whitespace-nowrap">Action</th>
+                    <th className="py-3 px-6 text-center whitespace-nowrap">Total</th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm">
                   {cartItems.map((item, index) => (
-                    <tr key={item.productId._id} className="border-b border-gray-200 hover:bg-gray-100">
-                      <td className="py-3 px-6 text-left whitespace-nowrap">
-                        <div className="flex items-center justify-center ">
-                          <img src={item.productImage} alt={item.productId.productName} className="w-12 h-12 object-cover mr-4 rounded border border-gray-400" />
+                    <tr key={item.productId._id} className="border-b border-gray-200 hover:bg-gray-100 text-xs sm:text-sm">
+                      <td className="py-3 px-6 text-center whitespace-nowrap ">
+                        <div className="flex items-center justify-center mx-auto">
+                          <img src={item.productImage} alt={item.productId.productName} className="w-12 h-12 object-cover rounded border border-gray-400" />
                         </div>
                       </td>
 
-                      <td className="py-3 px-6 text-center flex flex-col">
-                        <span className="text-gray-900 font-semibold">{item.productId.productName}</span>
-                        <span className='font-normal'>({item.quantity} {item.unit})</span>
+                      <td className="mt-2 sm:mt-0 py-3 px-2 sm:px-6 text-center flex flex-col whitespace-nowrap ">
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{item.productId.productName}</span>
+                        <span className='font-normal whitespace-nowrap'>({item.quantity} {item.unit})</span>
                       </td>
 
-                      <td className="py-3 px-6 text-center">
-                        <span className='text-gray-900 font-semibold'>&#x20B9; {item.price}</span> <br />
+                      <td className="py-3 px-6 text-center whitespace-nowrap">
+                        <span className='text-gray-900 font-semibold whitespace-nowrap'>&#x20B9; {item.price}</span> <br />
                         <span>(1 {item.unit})</span>
                       </td>
 
                       <td className="py-3 px-6 text-center">
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center whitespace-nowrap">
                           <button onClick={() => decreaseQuantity(index)} className="text-gray-600 bg-gray-300 rounded-l px-2 py-1 hover:bg-gray-400">-</button>
                           <span className="px-3 py-1">{item.quantity}</span>
                           <button onClick={() => increaseQuantity(index)} className="text-gray-600 bg-gray-300 rounded-r px-2 py-1 hover:bg-gray-400">+</button>
                         </div>
                       </td>
 
-                      <td className="py-3 px-6 text-center">
+                      <td className="py-3 px-6 text-center whitespace-nowrap">
                         <button
                           onClick={() => removeCartItem(item.productId._id, index)}
                           className=" text-red-500 px-4 py-2 rounded font-semibold"
@@ -310,7 +315,7 @@ const Cart = () => {
                         </button>
                       </td>
 
-                      <td className="py-3 px-6 text-center">
+                      <td className="py-3 px-6 text-center whitespace-nowrap">
                         &#x20B9; {item.quantity * item.price}
                       </td>
                     </tr>
@@ -319,9 +324,9 @@ const Cart = () => {
               </table>
             </div>
 
-            <div className="w-[80%] bg-white shadow-md rounded-lg mt-4 p-4">
-              <div className='flex items-center gap-6 mb-4 '>
-                <h2 className="text-lg font-semibold">Total Amount: &#x20B9; {totalValue.toFixed(2)}</h2>
+            <div className="w-[95%] sm:w-[80%] bg-white shadow-md rounded-lg mt-4 p-4">
+              <div className='flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 mb-4 '>
+                <h2 className="text-lg font-semibold ">Total Amount: &#x20B9; {totalValue.toFixed(2)}</h2>
                 {
                   discount ?
                     <button
@@ -340,14 +345,14 @@ const Cart = () => {
                 }
               </div>
               {isOpen && (
-                <div className='flex mb-4 bg-gray-200 p-4 gap-3 items-center'>
+                <div className='flex flex-col xl:flex-row mb-4 bg-slate-200 p-4 gap-3 items-center'>
                   <p>Your wallet balance is {discount ? "0" : <span className='font-semibold'>&#x20B9;{(walletBalance).toFixed(2)}</span>}</p>
                   {
                     discount ? "" :
-                      <div className='flex gap-4 items-center'>
+                      <div className='flex flex-col lg:flex-row gap-4 items-center'>
                         <p className='flex items-center gap-2'>
-                          <del className='text-sm'>&#x20B9;{totalValue}</del>
-                          <span className='font-semibold text-xl'>&#x20B9;{(totalValue - walletBalance).toFixed(2)}</span>
+                          <del className='text-xs sm:text-sm'>&#x20B9;{totalValue}</del>
+                          <span className='font-semibold text-lg sm:text-xl'>&#x20B9;{(totalValue - walletBalance).toFixed(2)}</span>
                         </p>
                         <button
                           onClick={discountApply}
@@ -356,29 +361,29 @@ const Cart = () => {
                         >
                           Apply
                         </button>
-                        {walletBalance <= 100 && <p className='text-sm text-red-500'>You can apply only if your wallet balance is above ₹ 100.00</p>}
+                        {walletBalance <= 100 && <p className='text-sm text-center text-red-500'>You can apply only if your wallet balance is above ₹ 100.00</p>}
                         {totalValue < walletBalance && <p className='text-sm text-red-500'>Your total amount is less than the wallet balance.</p>}
                       </div>
                   }
                 </div>
 
               )}
-              <div className='flex items-center gap-10'>
-                <h2 className="text-lg font-semibold ">Choose Payment Method:</h2>
-                <div className="flex gap-8">
+              <div className='flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-10'>
+                <h2 className="text-sm sm:text-lg font-semibold ">Choose Payment Method:</h2>
+                <div className="flex flex-col xs:flex-row gap-2 sm:gap-8 text-sm sm:text-lg">
                   <label className="mr-4 flex gap-2 items-center">
-                    <input type="radio" value="COD" checked={paymentMethod === 'COD'} onChange={(e) => setPaymentMethod(e.target.value)} />
+                    <input className='mt-0.5 sm:mt-0' type="radio" value="COD" checked={paymentMethod === 'COD'} onChange={(e) => setPaymentMethod(e.target.value)} />
                     Cash on Delivery
                   </label>
                   <label className='flex gap-2 items-center'>
-                    <input type="radio" value="Online" checked={paymentMethod === 'Online'} onChange={(e) => setPaymentMethod(e.target.value)} />
+                    <input className='mt-0.5 sm:mt-0' type="radio" value="Online" checked={paymentMethod === 'Online'} onChange={(e) => setPaymentMethod(e.target.value)} />
                     Online Payment
                   </label>
                 </div>
               </div>
             </div>
 
-            <div className="w-[80%] bg-white shadow-md rounded-lg mt-4 p-4">
+            <div className="w-[95%] sm:w-[80%] bg-white shadow-md rounded-lg mt-4 p-4">
               <h2 className="text-lg font-semibold mb-2">Delivery Details:</h2>
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -398,9 +403,13 @@ const Cart = () => {
                   <input type="text" id="pincode" value={formData.pincode} onChange={handleChange} className="mt-1 p-2 w-full border rounded-lg" required />
                 </div>
 
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                  Confirm & Place Order
-                </button>
+                <div className='w-full flex justify-center items-center '>
+                  <button
+                    type="submit" className="w-full sm:w-auto bg-blue-500 text-white px-4 sm:px-12 py-2 rounded hover:bg-blue-600 text-sm sm:text-[16px]"
+                    onClick={handleOrderOpen}>
+                    Place Order
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -412,32 +421,40 @@ const Cart = () => {
         )
       }
 
-      {previewOrder && (
-        <div className="w-full mx-auto p-4 flex flex-col justify-center items-center mb-10">
-          <h2 className="w-[80%] text-2xl font-semibold mb-4 text-left pt-10">Order Preview:</h2>
+      {orderOpen && previewOrder && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
 
-          <div className="w-[80%] bg-white shadow-md rounded-lg mt-4 p-4">
-            <h2 className="flex items-center gap-1 text-lg font-semibold mb-2">
+          <div className="w-[90%] sm:w-[60%] lg:w-[40%] bg-white shadow-md rounded-lg mt-4 p-4 lg:px-8">
+            <h2 className="w-[95%] text-lg sm:text-2xl font-semibold mb-2 sm:mb-4 text-left">Order Preview:</h2>
+            <h2 className="flex items-center gap-1 text-sm sm:text-lg font-semibold mb-2">
               Total Amount: &#x20B9; {totalValue.toFixed(2)}
               {discount ? <span className='font-normal text-[14px] mb-1'>(with discount &#x20B9;{discount})</span> : ""}
             </h2>
-            <h2 className="text-lg font-semibold mb-2">Payment Method: {paymentMethod}</h2>
-            <h2 className="text-lg font-semibold mb-2">Delivery Details:</h2>
-            <p><strong>Name:</strong> {formData.name}</p>
-            <p><strong>Mobile Number:</strong> {formData.mobileNumber}</p>
-            <p><strong>Address:</strong> {formData.address}</p>
-            <p><strong>Pincode:</strong> {formData.pincode}</p>
+            <h2 className="text-sm sm:text-lg font-semibold mb-8">Payment Method: {paymentMethod}</h2>
+            <h2 className="text-[16px] sm:text-lg font-semibold mb-2">Delivery Details:</h2>
+            <p className='text-sm sm:text-lg'><strong>Name:</strong> {formData.name}</p>
+            <p className='text-sm sm:text-lg'><strong>Mobile Number:</strong> {formData.mobileNumber}</p>
+            <p className='text-sm sm:text-lg'><strong>Address:</strong> {formData.address}</p>
+            <p className='text-sm sm:text-lg'><strong>Pincode:</strong> {formData.pincode}</p>
 
-            <button
-              onClick={handlePlaceOrder}
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mt-4"
-            >
-              {loading ? (
-                <ClipLoader color={'#ffffff'} loading={loading} size={20} />
-              ) : (
-                'Place Order'
-              )}
-            </button>
+            <div className='w-full flex flex-col-reverse sm:flex-row justify-center lg:justify-end items-center mt-4 gap-2 sm:gap-4'>
+              <button
+                onClick={() => window.location.reload()}
+                className='w-full sm:w-auto bg-gray-300 text-sm sm:text-[16px] px-8 sm:py-2 py-1 rounded'>
+                Cancel
+              </button>
+              <button
+                onClick={handlePlaceOrder}
+                className="w-full sm:w-auto bg-green-500 text-white px-4 sm:py-2 py-1 rounded hover:bg-green-600 text-sm sm:text-[16px]"
+              >
+                {loading ? (
+                  <ClipLoader color={'#ffffff'} loading={loading} size={20} />
+                ) : (
+                  'Confirm & Place Order'
+                )}
+              </button>
+
+            </div>
           </div>
         </div>
       )}
