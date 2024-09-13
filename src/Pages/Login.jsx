@@ -48,18 +48,18 @@ function Login() {
           toastClassName="custom-toast"
           bodyClassName="custom-body"
         />
-        <div className="flex flex-col items-center bg-white p-10 rounded-xl">
+        <div className="flex flex-col items-center bg-white p-5 sm:p-10 rounded">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-[#3E4095] md:text-3xl mb-6">
             Sign in to your account
           </h1>
-          <form className="space-y-4 md:space-y-6 w-full max-w-md" onSubmit={handleSubmit}>
+          <form className="space-y-4 md:space-y-6 w-full " onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
               <input
                 type="email"
                 name="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 text-xs sm:text-sm"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -71,7 +71,7 @@ function Login() {
                 type="password"
                 name="password"
                 id="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  text-xs sm:text-sm"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -82,13 +82,13 @@ function Login() {
             </div>
             <button
               type="submit"
-              className="w-full text-white bg-[rgb(129,196,8)] hover:bg-[rgba(130,196,8,0.82)] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-md px-5 py-2.5 text-center tracking-wider"
+              className="w-full text-white bg-[rgb(129,196,8)] hover:bg-[rgba(130,196,8,0.82)] focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded text-md px-5 py-1 sm:py-2.5 text-center tracking-wider text-sm sm:text-[16px]"
               disabled={loading}
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
 
-            <p className="text-sm  text-gray-900 ">
+            <p className="text-xs sm:text-sm  text-gray-900 ">
               Don’t have an account yet? <a href="/register" className="font-medium text-primary-600 hover:underline dark:text-[#3E4095]"> Sign up</a>
             </p>
           </form>

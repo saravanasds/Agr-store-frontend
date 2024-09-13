@@ -50,22 +50,23 @@ const MobileMenu = ({ isMobileMenuOpen, toggleMobileMenu, mobileMenuRef, token }
           </NavLink>
         ))}
       </div>
-      {token ? (
-        <div className="w-[90%] flex flex-col justify-center items-center gap-2 mt-4">
-          <a
-            href="/register"
-            className="w-full bg-gray-400 text-white px-4 py-2 sm:py-3 rounded hover:bg-gray-500 text-xs sm:text-[16px] text-center"
-          >
-            Sign Up
-          </a>
-          <a
-            href="/login"
-            className="w-full bg-[#3E4095] text-white px-4 py-2 sm:py-3 rounded hover:bg-[#4749ae] text-xs sm:text-[16px] text-center"
-          >
-            Sign In
-          </a>
-        </div>
-      ) : ""}
+      {token ? "" :
+        (
+          <div className="w-[90%] flex flex-col justify-center items-center gap-2 mt-4">
+            <a
+              href="/register"
+              className="w-full bg-gray-400 text-white px-4 py-2 sm:py-3 rounded hover:bg-gray-500 text-xs sm:text-[16px] text-center"
+            >
+              Sign Up
+            </a>
+            <a
+              href="/login"
+              className="w-full bg-[#3E4095] text-white px-4 py-2 sm:py-3 rounded hover:bg-[#4749ae] text-xs sm:text-[16px] text-center"
+            >
+              Sign In
+            </a>
+          </div>
+        )}
     </div>
   );
 };

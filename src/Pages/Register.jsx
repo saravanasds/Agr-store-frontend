@@ -79,10 +79,10 @@ function Register() {
 
             <div className='w-full bg-gray-300 '>
                 {/* <h1 className='text-center text-4xl font-bold tracking-widest pt-10 text-gray-700'>User Register </h1> */}
-                <form onSubmit={handleSubmit} className=' p-10'>
-                    <div className="w-full md:w-[40%] mx-auto flex flex-col md:gap-10 justify-center items-center p-6 px-12 border border-black rounded-lg shadow-lg shadow-gray-500 bg-gray-200">
-                        <h1 className='text-3xl font-semibold tracking-wider'>Sign Up </h1>
-                        <div className='w-full '>
+                <form onSubmit={handleSubmit} className=' sm:p-10'>
+                    <div className="w-full xs:w-[70%] sm:w-[80%] md:w-[60%] lg:w-[40%] mx-auto flex flex-col md:gap-10 justify-center items-center p-6 px-12 border border-black rounded-lg shadow-lg shadow-gray-500 bg-gray-200">
+                        <h1 className='text-xl sm:text-2xl md:text-3xl font-semibold tracking-wider mb-4 md:mb-0'>Sign Up </h1>
+                        <div className='w-full text-sm sm:text-[16px]'>
 
                             <div className="mb-1">
                                 <input

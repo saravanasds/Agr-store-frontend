@@ -39,6 +39,11 @@ const Shop = () => {
     fetchDepartments();
   }, []);
 
+    // Find the current department object from the departments array
+    const currentDepartment = departments.find(
+      (dept) => dept.department.toLowerCase() === department.toLowerCase()
+    );
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -152,11 +157,19 @@ const Shop = () => {
 
   return (
     <div className=''>
-      <div className="relative h-[150px] md:h-[200px]  w-auto rounded-lg overflow-hidden bg-white">
+      <div
+        className="relative h-[150px] md:h-[250px] w-auto rounded-lg overflow-hidden bg-white m-4"
+        style={{
+          backgroundImage: `url(${currentDepartment?.coverImage})`, // Set background image
+          backgroundSize: 'cover', // Ensure the image covers the entire div
+          backgroundPosition: 'center', // Center the image
+        }}
+      >
         <h1 className="relative z-10 flex items-center justify-center h-full w-full text-black text-xl sm:text-4xl md:text-6xl font-bold capitalize">
           {department}
         </h1>
       </div>
+
 
       {/* Department Tabs */}
 
