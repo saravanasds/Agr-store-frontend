@@ -18,6 +18,7 @@ import Register from './Pages/Register'
 import ProductDetail from './Pages/ProductDetails'
 import ForgotPassword from './Pages/forgotPassword'
 import ResetPassword from './Pages/ResetPassword'
+import OfferProducts from './Pages/OfferProducts'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/offerProducts" element={<OfferProducts />} />
             <Route path="/shop/:department" element={<Shop />} />
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/pages" element={<Pages />} />

@@ -46,12 +46,12 @@ const DepartmentsTab = () => {
   return (
     <>
       <div className='w-[90%] mx-auto mt-6 sm:mt-10'>
-        <h1 className='w-full text-left sm:text-center text-lg sm:text-2xl md:text-5xl font-semibold tracking-wider text-[#3E4095]'>Shop By Categories</h1>
+        <h1 className='w-full text-center text-lg sm:text-2xl md:text-4xl font-bold uppercase tracking-wider text-[#3E4095] '>Shop By Categories</h1>
       </div>
       {departments.map((department) => (
-        <div key={department.department} className="mx-auto py-4 px-4 sm:py-10 w-full sm:min-h-[500px] sm:px-10">
+        <div key={department.department} className="mx-auto py-2 px-4 sm:py-10 w-full sm:min-h-[500px] sm:px-10 ">
           <a href={`/shop/${department.department}`}>
-            <h1 className="text-[16px] sm:text-2xl font-semibold text-left mb-2 sm:mb-4 text-[rgb(129,196,8)] tracking-wider">{department.department}</h1>
+            <h1 className="text-[16px] sm:text-2xl font-semibold text-center sm:text-left mb-2 sm:mb-4 text-[rgb(129,196,8)] tracking-wider">{department.department}</h1>
             <div className="tab-content sm:py-8 bg-[rgb(244,246,248)] rounded-lg shadow-md">
               <TabContent categories={categoriesByDepartment[department.department] || []} />
             </div>

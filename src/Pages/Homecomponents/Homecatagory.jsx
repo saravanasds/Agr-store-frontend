@@ -21,16 +21,16 @@ const Homecatagory = () => {
 
   return (
     <>
-      <div className='w-[90%] mx-auto'>
-        <div className='mt-4 sm:mt-10 py-4'>
-          <h1 className='w-full text-left sm:text-center text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-wider text-[#3E4095]'>Shop By Departments</h1>
+      <div className='w-[95%] mx-auto'>
+        <div className='mb-2 sm:mb-8 mt-8'>
+          <h1 className='w-full text-center text-lg sm:text-2xl md:text-3xl lg:text-4xl uppercase font-bold tracking-wider text-[#3E4095]'>Shop By Departments</h1>
         </div>
 
-        <div class="w-full flex justify-center items-center gap-2 sm:gap-5 flex-wrap p-4 lg:px-10 pb-6 sm:pb-20 sm:pt-10 border border-gray-200 sm:border-none rounded-md">
+        <div class="w-full flex justify-center items-center gap-2 sm:gap-5 flex-wrap p-4 lg:px-10 pb-6 sm:pb-20 sm:pt-10 sm:border-none rounded-md bg-[rgb(244,246,248)] sm:mb-20">
 
           <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-5 ">
             {departments.map((department, index) => (
-              <div key={index} className="bg-[rgb(244,246,248)] rounded overflow-hidden shadow sm:shadow-lg hover:scale-[1.1] transform transition-all duration-300 px-1 lg:p-3 flex justify-center items-center">
+              <div key={index} className="bg-white rounded overflow-hidden shadow sm:shadow-lg hover:scale-[1.1] transform transition-all duration-300 px-1 lg:p-3 flex justify-center items-center">
                 <a href={`/shop/${department.department}`}>
                   <div className="w-[70px] h-[70px] xs:w-[110px] xs:h-[110px] sm:w-[180px] sm:h-[180px] xl:w-[220px] xl:h-[220px] flex justify-center items-center">
                     <img
