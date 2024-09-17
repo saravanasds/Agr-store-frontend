@@ -27,7 +27,6 @@ const QuantityPopup = ({ product, onClose, onAddToCart, loading }) => {
                     <button onClick={onClose} className="mr-4 bg-gray-300 px-5 py-1 rounded text-sm sm:text-lg">Cancel</button>
                     <button
                         onClick={() => onAddToCart(
-                            product._id,
                             quantity,
                             product.unit,
                             product.actualPrice,
@@ -36,6 +35,8 @@ const QuantityPopup = ({ product, onClose, onAddToCart, loading }) => {
                             product.productImage,
                             product.shopName,
                             product.productCode,
+                            product.productName,
+                            product.vendorEmail,
                             product.vendorCommission
                         )}
                         className="bg-[#3E4095] text-white px-5 py-1 rounded text-sm sm:text-lg"

@@ -110,11 +110,11 @@ const Cart = () => {
     setPreviewOrder(true); // Enable preview mode
   };
 
-  const removeCartItem = async (productId, index) => {
+  const removeCartItem = async (productCode, index) => {
     try {
       await axios.post('http://localhost:5000/api/cart/removeCartItem', {
         email: email,
-        productId: productId,
+        productCode: productCode,
       });
       const updatedCartItems = cartItems.filter((_, i) => i !== index);
       setCartItems(updatedCartItems);
@@ -125,6 +125,8 @@ const Cart = () => {
     }
   };
 
+  console.log(cartItems);
+
   const handlePlaceOrder = async () => {
     setLoading(true);
     const orderData = {
@@ -133,11 +135,10 @@ const Cart = () => {
         const commissionAmount = (item.vendorCommission / 100) * item.price * item.quantity;
 
         return {
-          productId: item.productId._id,
           productCode: item.productCode,
           vendorCommission: item.vendorCommission,
-          productName: item.productId.productName,
-          vendorEmail: item.productId.vendorEmail,
+          productName: item.productName,
+          vendorEmail: item.vendorEmail,
           shopName: item.shopName,
           productImage: item.productImage,
           quantity: item.quantity,
@@ -281,15 +282,15 @@ const Cart = () => {
                 </thead>
                 <tbody className="text-gray-600 text-sm">
                   {cartItems.map((item, index) => (
-                    <tr key={item.productId._id} className="border-b border-gray-200 hover:bg-gray-100 text-xs sm:text-sm">
+                    <tr key={item.productCode} className="border-b border-gray-200 hover:bg-gray-100 text-xs sm:text-sm">
                       <td className="py-3 px-6 text-center whitespace-nowrap ">
                         <div className="flex items-center justify-center mx-auto">
-                          <img src={item.productImage} alt={item.productId.productName} className="w-12 h-12 object-cover rounded border border-gray-400" />
+                          <img src={item.productImage} alt={item.productName}  className="w-12 h-12 object-cover rounded border border-gray-400" />
                         </div>
                       </td>
 
                       <td className="mt-2 sm:mt-0 py-3 px-2 sm:px-6 text-center flex flex-col whitespace-nowrap ">
-                        <span className="text-gray-900 font-semibold whitespace-nowrap">{item.productId.productName}</span>
+                        <span className="text-gray-900 font-semibold whitespace-nowrap">{item.productName}</span>
                         <span className='font-normal whitespace-nowrap'>({item.quantity} {item.unit})</span>
                       </td>
 
@@ -308,7 +309,7 @@ const Cart = () => {
 
                       <td className="py-3 px-6 text-center whitespace-nowrap">
                         <button
-                          onClick={() => removeCartItem(item.productId._id, index)}
+                          onClick={() => removeCartItem(item.productCode, index)}
                           className=" text-red-500 px-4 py-2 rounded font-semibold"
                         >
                           Remove

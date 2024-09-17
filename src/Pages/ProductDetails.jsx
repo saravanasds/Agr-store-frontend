@@ -34,7 +34,6 @@ const ProductDetail = () => {
   }, [productId]);
 
   const addToCart = async (
-    productId,
     quantity,
     unit,
     actualPrice,

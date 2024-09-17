@@ -89,6 +89,8 @@ const Shop = () => {
     }
   }, [department]);
 
+  console.log(products)
+
   // Filter products based on the search term
   useEffect(() => {
     if (searchTerm) {
@@ -109,7 +111,7 @@ const Shop = () => {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const addToCart = async (productId, quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, vendorCommission) => {
+  const addToCart = async (quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, productName, vendorEmail, vendorCommission) => {
     try {
       setLoading(true);
       // Calculate the total balance based on the quantity
@@ -117,8 +119,9 @@ const Shop = () => {
 
       const response = await axios.post('http://localhost:5000/api/cart/addToCart', {
         email,
-        productId,
         productCode,
+        productName,
+        vendorEmail,
         vendorCommission,
         shopName,
         quantity,
@@ -274,7 +277,7 @@ const Shop = () => {
               <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xxl:grid-cols-5 gap-2 md:gap-4 place-items-center">
                 {currentProducts.map((product) => (
                   <div
-                    key={product._id}
+                    key={product.productCode}
                     className="w-full md:w-[220px] h-[200px] sm:h-[250px] md:h-[320px] bg-white rounded-lg shadow-md hover:shadow-lg hover:shadow-gray-400 border border-[#3E4095] transition-transform duration-1000 transform"
                     onClick={scrolltoTop}
                   >

@@ -3,12 +3,22 @@ import axios from 'axios';
 import { FaArrowRight, } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
+import QuantityPopup from '../QuantityPopup';
 
 const HomeOffer = () => {
+    const [email, setEmail] = useState('');
     const [offerProducts, setOfferProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0); // Track the current set of displayed products
     const [maxProductsToShow, setMaxProductsToShow] = useState(5); // Default is 5 for larger screens
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    useEffect(() => {
+        const data = localStorage.getItem('userEmail');
+        console.log(data);
+        setEmail(data);
+    }, []);
 
     useEffect(() => {
         const fetchVendorProducts = async () => {
@@ -61,6 +71,49 @@ const HomeOffer = () => {
 
     // Get the current set of products to display based on screen size
     const displayedProducts = offerProducts.slice(currentIndex, currentIndex + maxProductsToShow);
+
+    const addToCart = async (quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, productName, vendorEmail, vendorCommission) => {
+        try {
+            setLoading(true);
+            // Calculate the total balance based on the quantity
+            const totalBalance = balance * quantity;
+
+            const response = await axios.post('http://localhost:5000/api/cart/addToCart', {
+                email,
+                productCode,
+                productName,
+                vendorEmail: vendorEmail,
+                vendorCommission: vendorCommission,
+                shopName,
+                quantity,
+                unit,
+                actualPrice,
+                price,
+                balance: totalBalance, // Send the correct balance
+                productImage,
+            });
+
+            if (response.data.success) {
+                alert('Product added to cart successfully');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+        } finally {
+            setLoading(false);
+            closePopup();
+        }
+    };
+
+    const openPopup = (product) => {
+        setSelectedProduct(product);
+        setIsPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setIsPopupOpen(false);
+        setSelectedProduct(null);
+    };
 
     return (
         <div className='w-[95%] mx-auto sm:py-10'>
@@ -117,6 +170,7 @@ const HomeOffer = () => {
                                         <div className="w-[90%] flex items-center justify-between bottom-2 absolute">
                                             <button
                                                 className="w-full bg-green-500 border-2 text-white py-1 px-2 rounded hover:bg-transparent hover:border-green-500 transition duration-300 hover:text-black text-[10px] sm:text-sm tracking-wider"
+                                                onClick={email ? () => openPopup(product) : () => alert('Please Sign In Your Account')}
                                             >
                                                 + Add to Cart
                                             </button>
@@ -150,6 +204,17 @@ const HomeOffer = () => {
                     </div>
                 )}
             </div>
+
+            {/* Render the popup if it is open */}
+            {isPopupOpen && (
+                <QuantityPopup
+                    product={selectedProduct}
+                    onClose={closePopup}
+                    onAddToCart={addToCart}
+                    loading={loading}
+                />
+            )}
+
         </div>
     );
 };

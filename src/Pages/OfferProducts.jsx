@@ -30,7 +30,7 @@ const OfferProducts = () => {
     fetchVendorProducts();
   }, []);
 
-  const addToCart = async (productId, quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, vendorCommission) => {
+  const addToCart = async (quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, productName, vendorEmail, vendorCommission) => {
     try {
       setLoading(true);
       // Calculate the total balance based on the quantity
@@ -38,9 +38,10 @@ const OfferProducts = () => {
 
       const response = await axios.post('http://localhost:5000/api/cart/addToCart', {
         email,
-        productId,
         productCode,
-        vendorCommission,
+        productName,
+        vendorEmail: vendorEmail,
+        vendorCommission: vendorCommission,
         shopName,
         quantity,
         unit,
@@ -91,7 +92,7 @@ const OfferProducts = () => {
         <div className="w-full grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 xxl:grid-cols-5 gap-2 sm:gap-8 place-items-center py-8 bg-slate-200 rounded">
           {offerProducts.map(product => (
             <div
-              key={product._id}
+              key={product.productCode}
               className="w-[130px] sm:w-[160px] lg:w-[220px] h-[200px] sm:h-[250px] lg:h-[320px] bg-white rounded shadow-md hover:shadow-lg hover:shadow-gray-400 border border-[#3E4095] transition-transform duration-1000 transform"
             >
 
