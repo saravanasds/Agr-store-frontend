@@ -72,7 +72,7 @@ const HomeOffer = () => {
     // Get the current set of products to display based on screen size
     const displayedProducts = offerProducts.slice(currentIndex, currentIndex + maxProductsToShow);
 
-    const addToCart = async (quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, productName, vendorEmail, vendorCommission) => {
+    const addToCart = async (quantity, unit, actualPrice, price, balance, productImage, shopName, productCode, productName, vendorEmail, vendorCommission, offered) => {
         try {
             setLoading(true);
             // Calculate the total balance based on the quantity
@@ -91,6 +91,7 @@ const HomeOffer = () => {
                 price,
                 balance: totalBalance, // Send the correct balance
                 productImage,
+                offered: offered || " "
             });
 
             if (response.data.success) {

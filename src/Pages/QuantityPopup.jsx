@@ -37,7 +37,8 @@ const QuantityPopup = ({ product, onClose, onAddToCart, loading }) => {
                             product.productCode,
                             product.productName,
                             product.vendorEmail,
-                            product.vendorCommission
+                            product.vendorCommission,
+                            product.offered || " "
                         )}
                         className="bg-[#3E4095] text-white px-5 py-1 rounded text-sm sm:text-lg"
                     >

@@ -147,6 +147,7 @@ const Cart = () => {
           balance: item.balance,
           total: item.price * item.quantity,
           commissionAmount: commissionAmount,
+          offered: item.offered || " "
         };
       }),
       name: formData.name,
