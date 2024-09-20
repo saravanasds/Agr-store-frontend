@@ -33,7 +33,7 @@ const MobileMenu = ({ isMobileMenuOpen, toggleMobileMenu, mobileMenuRef, token }
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? "block p-2 px-4 text-white text-[14px]" : " text-white block px-4 text-[14px] hover:text-[rgb(129,196,8)]"
+            isActive ? "block p-2 px-4 text-white text-[14px]" : " text-white block px-4 p-2 text-[14px] hover:text-[rgb(129,196,8)]"
           }
           onClick={toggleMobileMenu}
         >
@@ -42,7 +42,7 @@ const MobileMenu = ({ isMobileMenuOpen, toggleMobileMenu, mobileMenuRef, token }
         <NavLink
           to="/offerProducts"
           className={({ isActive }) =>
-            isActive ? "block p-2 px-4  text-white text-[14px]" : " text-white block px-4 text-[14px] hover:text-[rgb(129,196,8)]"
+            isActive ? "block p-2 px-4  text-white text-[14px]" : " text-white block px-4 p-2 text-[14px] hover:text-[rgb(129,196,8)]"
           }
           onClick={toggleMobileMenu}
         >

@@ -8,11 +8,27 @@ const OfferProducts = () => {
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [settings, setSettings] = useState('');
 
   useEffect(() => {
     const data = localStorage.getItem('userEmail');
     console.log(data);
     setEmail(data);
+  }, []);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/admin/getSettings');
+        setSettings(response.data.data[0]);
+      } catch (err) {
+        console.error('Error fetching data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSettings();
   }, []);
 
   useEffect(() => {
@@ -76,18 +92,18 @@ const OfferProducts = () => {
 
   return (
     <div className='w-[95%] mx-auto'>
-      <div className='relative w-full bg-white py-4'>
+      <div className='relative w-full bg-white py-4 '>
         <img
-          src='src/Accets/HeroSec.jpg'
-          className="w-full h-[150px] md:h-[200px] object-cover rounded-lg"
+          src={settings.offerImage}
+          className="w-full h-full object-cover rounded-lg"
 
         />
       </div>
 
-      <div className='py-4'>
+      <div className='sm:py-4 pb-4'>
 
         <div className='w-[100%] mb-4'>
-          <h1 className='sm:text-2xl font-bold tracking-wider bg-gradient-to-r from-slate-200 to-white p-1 sm:p-2 px-4 uppercase rounded text-[#3E4095] text-center '>Top Offers</h1>
+          <h1 className='text-[14px] sm:text-2xl font-bold tracking-wider bg-gradient-to-r from-slate-200 to-white p-1 sm:p-2 px-4 uppercase rounded text-[#3E4095] text-center '>{settings.offerHeading}</h1>
         </div>
 
         <div className="w-full grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 xxl:grid-cols-5 gap-2 sm:gap-8 place-items-center py-8 bg-slate-200 rounded">

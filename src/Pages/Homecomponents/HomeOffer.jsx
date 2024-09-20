@@ -13,12 +13,28 @@ const HomeOffer = () => {
     const [maxProductsToShow, setMaxProductsToShow] = useState(5); // Default is 5 for larger screens
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [settings, setSettings] = useState('');
 
     useEffect(() => {
         const data = localStorage.getItem('userEmail');
         console.log(data);
         setEmail(data);
     }, []);
+
+    useEffect(() => {
+        const fetchSettings = async () => {
+          try {
+            const response = await axios.get('http://localhost:5000/api/admin/getSettings');
+            setSettings(response.data.data[0]);
+          } catch (err) {
+            console.error('Error fetching data');
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchSettings();
+      }, []);
 
     useEffect(() => {
         const fetchVendorProducts = async () => {
@@ -119,7 +135,7 @@ const HomeOffer = () => {
     return (
         <div className='w-[95%] mx-auto sm:py-10'>
             <div className='w-[100%]'>
-                <h1 className='sm:text-2xl font-bold tracking-wider bg-gradient-to-r from-slate-200 to-white p-1 sm:p-2 px-4 uppercase rounded text-[#3E4095] text-center '>Top Offers</h1>
+                <h1 className='text-[14px] sm:text-2xl font-bold tracking-wider bg-gradient-to-r from-slate-200 to-white p-1 sm:p-2 px-4 uppercase rounded text-[#3E4095] text-center '>{settings.offerHeading}</h1>
             </div>
 
             <div className='w-full my-4 sm:my-10 flex flex-col gap-2 sm:gap-8 bg-slate-200 p-4 sm:p-6 rounded-md justify-center items-center'>

@@ -317,7 +317,7 @@ const Shop = () => {
 
               {/* Pagination Controls */}
               <div className="flex justify-center mt-4">
-                <ul className="flex list-none">
+                <ul className="flex list-none flex-wrap">
                   {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, index) => (
                     <li
                       key={index + 1}
